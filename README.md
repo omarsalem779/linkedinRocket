@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مقياس لينكدإن - تقييم حسابك الاحترافي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #0077b5;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .evaluation-form {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #0077b5;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #0077b5;
+            box-shadow: 0 0 0 2px rgba(0, 119, 181, 0.2);
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .rating-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        
+        .rating-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .rating-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .rating-item label {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .stars {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .star {
+            font-size: 24px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .star.active {
+            color: #ffc107;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #0077b5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #005885;
+        }
+        
+        .result {
+            display: none;
+            padding: 25px;
+            text-align: center;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #0077b5;
+            margin: 20px 0;
+        }
+        
+        .feedback {
+            text-align: right;
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-right: 4px solid #0077b5;
+        }
+        
+        .improvement-tips {
+            margin-top: 25px;
+            text-align: right;
+        }
+        
+        .improvement-tips h3 {
+            color: #0077b5;
+            margin-bottom: 15px;
+        }
+        
+        .improvement-tips ul {
+            list-style-type: none;
+        }
+        
+        .improvement-tips li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .improvement-tips li:last-child {
+            border-bottom: none;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            header h1 {
+                font-size: 22px;
+            }
+            
+            .rating-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .stars {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>مقياس لينكدإن - تقييم حسابك الاحترافي</h1>
+            <p>اكتشف نقاط القوة والضعف في حسابك واحصل على نصائح محددة للتحسين</p>
+        </header>
+        
+        <div class="evaluation-form">
+            <div class="form-group">
+                <label for="profileUrl">رابط حساب لينكدإن (اختياري)</label>
+                <input type="url" id="profileUrl" placeholder="https://linkedin.com/in/اسمك">
+            </div>
+            
+            <div class="form-group">
+                <label for="name">اسمك</label>
+                <input type="text" id="name" placeholder="أدخل اسمك">
+            </div>
+            
+            <div class="form-group">
+                <label for="industry">مجالك المهني</label>
+                <select id="industry">
+                    <option value="">اختر مجالك</option>
+                    <option value="tech">التكنولوجيا والمعلومات</option>
+                    <option value="marketing">التسويق والمبيعات</option>
+                    <option value="finance">المال والأعمال</option>
+                    <option value="education">التعليم والتدريب</option>
+                    <option value="health">الصحة والطب</option>
+                    <option value="engineering">الهندسة</option>
+                    <option value="other">مجال آخر</option>
+                </select>
+            </div>
+            
+            <div class="rating-section">
+                <h3>قيم حسابك في النقاط التالية:</h3>
+                
+                <div class="rating-item">
+                    <label>الصورة الشخصية</label>
+                    <div class="stars" data-category="profilePhoto">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                </div>
+                
+                <div class="rating-item">
+                    <label>غلاف الصفحة</label>
+                    <div class="stars" data-category="cover">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                </div>
+                
+                <div class="rating-item">
+                    <label>العنوان والوصف</label>
+                    <div class="stars" data-category="headline">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                </div>
+                
+                <div class="rating-item">
+                    <label>قسم "حول"</label>
+                    <div class="stars" data-category="about">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                </div>
+                
+                <div class="rating-item">
+                    <label>الخبرات العملية</label>
+                    <div class="stars" data-category="experience">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                </div>
+                
+                <div class="rating-item">
+                    <label>المهارات</label>
+                    <div class="stars" data-category="skills">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                </div>
+                
+                <div class="rating-item">
+                    <label>التوصيات</label>
+                    <div class="stars" data-category="recommendations">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                </div>
+                
+                <div class="rating-item">
+                    <label>النشاط والمشاركة</label>
+                    <div class="stars" data-category="activity">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="notes">ملاحظات إضافية (اختياري)</label>
+                <textarea id="notes" placeholder="أي ملاحظات أخرى تريد إضافتها..."></textarea>
+            </div>
+            
+            <button class="btn" id="evaluateBtn">تقييم حسابي الآن</button>
+            
+            <div class="result" id="result">
+                <h2>نتيجة تقييم حسابك</h2>
+                <div class="score" id="score">0/10</div>
+                <div class="feedback" id="feedback"></div>
+                
+                <div class="improvement-tips">
+                    <h3>نصائح للتحسين</h3>
+                    <ul id="tipsList">
+                        <!-- سيتم ملؤها بالجافاسكريبت -->
+                    </ul>
+                </div>
+                
+                <button class="btn" id="resetBtn" style="margin-top: 20px; background: #28a745;">تقييم حساب آخر</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>مقياس لينكدإن - صمم لمساعدة المحترفين على تحسين وجودهم الرقمي</p>
+        <p>© 2023 - جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script>
+        // تفعيل نظام التقييم بالنجوم
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function() {
+                const value = parseInt(this.getAttribute('data-value'));
+                const starsContainer = this.parentElement;
+                const category = starsContainer.getAttribute('data-category');
+                
+                // تحديث النجوم النشطة
+                starsContainer.querySelectorAll('.star').forEach((s, index) => {
+                    if (index < value) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+                
+                // حفظ القيمة في بيانات العنصر
+                starsContainer.setAttribute('data-rating', value);
+            });
+        });
+        
+        // تقييم الحساب
+        document.getElementById('evaluateBtn').addEventListener('click', function() {
+            // جمع التقييمات
+            let totalScore = 0;
+            let ratedCategories = 0;
+            const ratings = {};
+            
+            document.querySelectorAll('.stars').forEach(starsContainer => {
+                const category = starsContainer.getAttribute('data-category');
+                const rating = starsContainer.getAttribute('data-rating');
+                
+                if (rating) {
+                    ratings[category] = parseInt(rating);
+                    totalScore += parseInt(rating);
+                    ratedCategories++;
+                }
+            });
+            
+            if (ratedCategories === 0) {
+                alert('يرجى تقييم حسابك في قسم واحد على الأقل');
+                return;
+            }
+            
+            // حساب النتيجة النهائية (من 10)
+            const finalScore = Math.round((totalScore / (ratedCategories * 5)) * 10 * 10) / 10;
+            
+            // عرض النتيجة
+            document.getElementById('score').textContent = `${finalScore}/10`;
+            
+            // تقديم التغذية الراجعة
+            let feedback = '';
+            if (finalScore >= 8) {
+                feedback = 'ممتاز! حسابك قوي جداً ومحترف. استمر في الحفاظ على هذا المستوى وتفاعل بانتظام لتعزيز وجودك.';
+            } else if (finalScore >= 6) {
+                feedback = 'جيد! حسابك محترف ولكن هناك بعض النقاط التي يمكن تحسينها لتعزيز وجودك بشكل أكبر.';
+            } else if (finalScore >= 4) {
+                feedback = 'مقبول! حسابك يحتاج إلى تحسينات في عدة مجالات ليكون أكثر فعالية وجاذبية.';
+            } else {
+                feedback = 'حسابك يحتاج إلى عمل جاد! ركز على النقاط الأساسية أولاً لبناء وجود احترافي.';
+            }
+            
+            document.getElementById('feedback').textContent = feedback;
+            
+            // إنشاء نصائح مخصصة بناءً على التقييمات
+            const tipsList = document.getElementById('tipsList');
+            tipsList.innerHTML = '';
+            
+            const tips = {
+                profilePhoto: 'حسّن صورتك الشخصية: استخدم صورة واضحة واحترافية بخلفية محايدة وابتسامة لطيفة.',
+                cover: 'أضف صورة غلاف تعبر عن هويتك المهنية أو مجال تخصصك.',
+                headline: 'حسّن العنوان: اجعله غنياً بالكلمات المفتاحية ويصف قيمتك المهنية بوضوح.',
+                about: 'طوّر قسم "حول": اكتب قصة مهنية مقنعة، أضف إنجازاتك واستخدم كلمات مفتاحية من مجالك.',
+                experience: 'أضف تفاصيل لإنجازاتك في كل وظيفة، مستخدماً أرقاماً ونسباً مئوية لتوضيح تأثيرك.',
+                skills: 'أضف مهارات متنوعة واطلب توصيات للمهارات الرئيسية، واحرص على تحديثها بانتظام.',
+                recommendations: 'اطلب توصيات من زملاء ومديرين سابقين، واكتب توصيات للآخرين أيضاً.',
+                activity: 'انشر محتوى ذا قيمة بانتظام، شارك في المنشورات وعلق بمداخلات مفيدة.'
+            };
+            
+            // إضافة النصائح بناءً على التقييمات المنخفضة
+            Object.keys(ratings).forEach(category => {
+                if (ratings[category] <= 2) {
+                    const li = document.createElement('li');
+                    li.textContent = tips[category];
+                    tipsList.appendChild(li);
+                }
+            });
+            
+            // إذا كانت جميع التقييمات عالية، أضف نصائح عامة
+            if (tipsList.children.length === 0) {
+                const generalTips = [
+                    'واصل نشر محتوى قيم بانتظام لتعزيز مكانتك كخبير في مجالك.',
+                    'وسّع شبكتك بالتواصل مع محترفين في مجالك وحضور الفعاليات.',
+                    'استخدم ميزة النشر على لينكدإن لمشاركة مقالات أطول وأكثر تعمقاً.'
+                ];
+                
+                generalTips.forEach(tip => {
+                    const li = document.createElement('li');
+                    li.textContent = tip;
+                    tipsList.appendChild(li);
+                });
+            }
+            
+            // عرض نتيجة التقييم
+            document.getElementById('result').style.display = 'block';
+            
+            // التمرير إلى نتيجة التقييم
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // إعادة تعيين النموذج
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            // إعادة تعيين النجوم
+            document.querySelectorAll('.star').forEach(star => {
+                star.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.stars').forEach(starsContainer => {
+                starsContainer.removeAttribute('data-rating');
+            });
+            
+            // إعادة تعيين الحقول
+            document.getElementById('profileUrl').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('industry').value = '';
+            document.getElementById('notes').value = '';
+            
+            // إخفاء النتيجة
+            document.getElementById('result').style.display = 'none';
+            
+            // التمرير إلى الأعلى
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
