@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مقياس لينكدإن - تقييم حسابك الاحترافي</title>
+    <title>محلل LinkedIn الذكي - تقييم بواسطة الذكاء الاصطناعي</title>
     <style>
         * {
             margin: 0;
@@ -46,7 +46,7 @@
             font-size: 16px;
         }
         
-        .evaluation-form {
+        .analyzer-form {
             padding: 25px;
         }
         
@@ -61,7 +61,7 @@
             color: #0077b5;
         }
         
-        input, select, textarea {
+        input, textarea {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #ddd;
@@ -70,58 +70,10 @@
             transition: all 0.3s;
         }
         
-        input:focus, select:focus, textarea:focus {
+        input:focus, textarea:focus {
             outline: none;
             border-color: #0077b5;
             box-shadow: 0 0 0 2px rgba(0, 119, 181, 0.2);
-        }
-        
-        textarea {
-            height: 100px;
-            resize: vertical;
-        }
-        
-        .rating-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 25px 0;
-        }
-        
-        .rating-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .rating-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-        
-        .rating-item label {
-            flex: 1;
-            margin-bottom: 0;
-        }
-        
-        .stars {
-            display: flex;
-            gap: 5px;
-        }
-        
-        .star {
-            font-size: 24px;
-            color: #ddd;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        
-        .star.active {
-            color: #ffc107;
         }
         
         .btn {
@@ -142,10 +94,35 @@
             background: #005885;
         }
         
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0077b5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         .result {
             display: none;
             padding: 25px;
-            text-align: center;
             background: #f8f9fa;
             border-radius: 10px;
             margin-top: 20px;
@@ -156,38 +133,42 @@
             font-weight: bold;
             color: #0077b5;
             margin: 20px 0;
+            text-align: center;
         }
         
-        .feedback {
-            text-align: right;
-            margin-top: 20px;
-            padding: 15px;
+        .analysis-section {
             background: white;
+            padding: 20px;
             border-radius: 8px;
+            margin: 15px 0;
             border-right: 4px solid #0077b5;
         }
         
-        .improvement-tips {
-            margin-top: 25px;
-            text-align: right;
-        }
-        
-        .improvement-tips h3 {
+        .analysis-section h3 {
             color: #0077b5;
             margin-bottom: 15px;
         }
         
+        .improvement-tips {
+            margin-top: 25px;
+        }
+        
         .improvement-tips ul {
             list-style-type: none;
+            padding-right: 0;
         }
         
         .improvement-tips li {
             padding: 10px 0;
             border-bottom: 1px dashed #eee;
+            padding-right: 15px;
+            position: relative;
         }
         
-        .improvement-tips li:last-child {
-            border-bottom: none;
+        .improvement-tips li:before {
+            content: "💡";
+            position: absolute;
+            right: -5px;
         }
         
         footer {
@@ -206,303 +187,162 @@
             header h1 {
                 font-size: 22px;
             }
-            
-            .rating-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .stars {
-                margin-top: 10px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>مقياس لينكدإن - تقييم حسابك الاحترافي</h1>
-            <p>اكتشف نقاط القوة والضعف في حسابك واحصل على نصائح محددة للتحسين</p>
+            <h1>🦸 محلل LinkedIn الذكي</h1>
+            <p>أدخل رابط حسابك - وسيقوم الذكاء الاصطناعي بتقييمه وإعطائك نصائح مخصصة</p>
         </header>
         
-        <div class="evaluation-form">
+        <div class="analyzer-form">
             <div class="form-group">
-                <label for="profileUrl">رابط حساب لينكدإن (اختياري)</label>
-                <input type="url" id="profileUrl" placeholder="https://linkedin.com/in/اسمك">
+                <label for="linkedinUrl">رابط حساب LinkedIn</label>
+                <input type="url" id="linkedinUrl" placeholder="https://www.linkedin.com/in/اسمك" required>
             </div>
             
             <div class="form-group">
-                <label for="name">اسمك</label>
-                <input type="text" id="name" placeholder="أدخل اسمك">
-            </div>
-            
-            <div class="form-group">
-                <label for="industry">مجالك المهني</label>
-                <select id="industry">
-                    <option value="">اختر مجالك</option>
-                    <option value="tech">التكنولوجيا والمعلومات</option>
-                    <option value="marketing">التسويق والمبيعات</option>
-                    <option value="finance">المال والأعمال</option>
-                    <option value="education">التعليم والتدريب</option>
-                    <option value="health">الصحة والطب</option>
-                    <option value="engineering">الهندسة</option>
-                    <option value="other">مجال آخر</option>
+                <label for="userGoals">أهدافك من الحساب (اختياري)</label>
+                <select id="userGoals">
+                    <option value="">اختر هدفك الرئيسي</option>
+                    <option value="job">البحث عن وظيفة</option>
+                    <option value="clients">جذب عملاء</option>
+                    <option value="networking">التواصل المهني</option>
+                    <option value="personal-branding">بناء علامة شخصية</option>
                 </select>
             </div>
             
-            <div class="rating-section">
-                <h3>قيم حسابك في النقاط التالية:</h3>
-                
-                <div class="rating-item">
-                    <label>الصورة الشخصية</label>
-                    <div class="stars" data-category="profilePhoto">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                </div>
-                
-                <div class="rating-item">
-                    <label>غلاف الصفحة</label>
-                    <div class="stars" data-category="cover">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                </div>
-                
-                <div class="rating-item">
-                    <label>العنوان والوصف</label>
-                    <div class="stars" data-category="headline">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                </div>
-                
-                <div class="rating-item">
-                    <label>قسم "حول"</label>
-                    <div class="stars" data-category="about">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                </div>
-                
-                <div class="rating-item">
-                    <label>الخبرات العملية</label>
-                    <div class="stars" data-category="experience">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                </div>
-                
-                <div class="rating-item">
-                    <label>المهارات</label>
-                    <div class="stars" data-category="skills">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                </div>
-                
-                <div class="rating-item">
-                    <label>التوصيات</label>
-                    <div class="stars" data-category="recommendations">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                </div>
-                
-                <div class="rating-item">
-                    <label>النشاط والمشاركة</label>
-                    <div class="stars" data-category="activity">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                </div>
-            </div>
+            <button class="btn" id="analyzeBtn">🔍 حلل حسابي باستخدام الذكاء الاصطناعي</button>
             
-            <div class="form-group">
-                <label for="notes">ملاحظات إضافية (اختياري)</label>
-                <textarea id="notes" placeholder="أي ملاحظات أخرى تريد إضافتها..."></textarea>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>جاري تحليل حسابك باستخدام DeepSeek AI...</p>
             </div>
-            
-            <button class="btn" id="evaluateBtn">تقييم حسابي الآن</button>
             
             <div class="result" id="result">
-                <h2>نتيجة تقييم حسابك</h2>
-                <div class="score" id="score">0/10</div>
-                <div class="feedback" id="feedback"></div>
+                <h2>📊 تقرير التحليل الذكي</h2>
+                <div class="score" id="score">8.5/10</div>
                 
-                <div class="improvement-tips">
-                    <h3>نصائح للتحسين</h3>
-                    <ul id="tipsList">
-                        <!-- سيتم ملؤها بالجافاسكريبت -->
-                    </ul>
+                <div class="analysis-section">
+                    <h3>🎯 نقاط القوة</h3>
+                    <div id="strengths"></div>
                 </div>
                 
-                <button class="btn" id="resetBtn" style="margin-top: 20px; background: #28a745;">تقييم حساب آخر</button>
+                <div class="analysis-section">
+                    <h3>⚠️ مجالات التحسين</h3>
+                    <div id="improvements"></div>
+                </div>
+                
+                <div class="analysis-section improvement-tips">
+                    <h3>💡 نصائح مخصصة</h3>
+                    <ul id="tipsList"></ul>
+                </div>
+                
+                <button class="btn" id="newAnalysis" style="background: #28a745;">🔄 تحليل حساب آخر</button>
             </div>
         </div>
     </div>
     
     <footer>
-        <p>مقياس لينكدإن - صمم لمساعدة المحترفين على تحسين وجودهم الرقمي</p>
+        <p>مدعوم بـ DeepSeek AI - صمم لمساعدة المحترفين على تطوير وجودهم الرقمي</p>
         <p>© 2023 - جميع الحقوق محفوظة</p>
     </footer>
 
     <script>
-        // تفعيل نظام التقييم بالنجوم
-        document.querySelectorAll('.star').forEach(star => {
-            star.addEventListener('click', function() {
-                const value = parseInt(this.getAttribute('data-value'));
-                const starsContainer = this.parentElement;
-                const category = starsContainer.getAttribute('data-category');
-                
-                // تحديث النجوم النشطة
-                starsContainer.querySelectorAll('.star').forEach((s, index) => {
-                    if (index < value) {
-                        s.classList.add('active');
-                    } else {
-                        s.classList.remove('active');
-                    }
-                });
-                
-                // حفظ القيمة في بيانات العنصر
-                starsContainer.setAttribute('data-rating', value);
-            });
-        });
-        
-        // تقييم الحساب
-        document.getElementById('evaluateBtn').addEventListener('click', function() {
-            // جمع التقييمات
-            let totalScore = 0;
-            let ratedCategories = 0;
-            const ratings = {};
+        // محاكاة اتصال بالذكاء الاصطناعي
+        document.getElementById('analyzeBtn').addEventListener('click', function() {
+            const linkedinUrl = document.getElementById('linkedinUrl').value;
+            const userGoals = document.getElementById('userGoals').value;
             
-            document.querySelectorAll('.stars').forEach(starsContainer => {
-                const category = starsContainer.getAttribute('data-category');
-                const rating = starsContainer.getAttribute('data-rating');
-                
-                if (rating) {
-                    ratings[category] = parseInt(rating);
-                    totalScore += parseInt(rating);
-                    ratedCategories++;
-                }
-            });
-            
-            if (ratedCategories === 0) {
-                alert('يرجى تقييم حسابك في قسم واحد على الأقل');
+            if (!linkedinUrl) {
+                alert('يرجى إدخال رابط حساب LinkedIn');
                 return;
             }
             
-            // حساب النتيجة النهائية (من 10)
-            const finalScore = Math.round((totalScore / (ratedCategories * 5)) * 10 * 10) / 10;
+            // إظهار تحميل
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('analyzeBtn').disabled = true;
             
-            // عرض النتيجة
-            document.getElementById('score').textContent = `${finalScore}/10`;
-            
-            // تقديم التغذية الراجعة
-            let feedback = '';
-            if (finalScore >= 8) {
-                feedback = 'ممتاز! حسابك قوي جداً ومحترف. استمر في الحفاظ على هذا المستوى وتفاعل بانتظام لتعزيز وجودك.';
-            } else if (finalScore >= 6) {
-                feedback = 'جيد! حسابك محترف ولكن هناك بعض النقاط التي يمكن تحسينها لتعزيز وجودك بشكل أكبر.';
-            } else if (finalScore >= 4) {
-                feedback = 'مقبول! حسابك يحتاج إلى تحسينات في عدة مجالات ليكون أكثر فعالية وجاذبية.';
-            } else {
-                feedback = 'حسابك يحتاج إلى عمل جاد! ركز على النقاط الأساسية أولاً لبناء وجود احترافي.';
-            }
-            
-            document.getElementById('feedback').textContent = feedback;
-            
-            // إنشاء نصائح مخصصة بناءً على التقييمات
-            const tipsList = document.getElementById('tipsList');
-            tipsList.innerHTML = '';
-            
-            const tips = {
-                profilePhoto: 'حسّن صورتك الشخصية: استخدم صورة واضحة واحترافية بخلفية محايدة وابتسامة لطيفة.',
-                cover: 'أضف صورة غلاف تعبر عن هويتك المهنية أو مجال تخصصك.',
-                headline: 'حسّن العنوان: اجعله غنياً بالكلمات المفتاحية ويصف قيمتك المهنية بوضوح.',
-                about: 'طوّر قسم "حول": اكتب قصة مهنية مقنعة، أضف إنجازاتك واستخدم كلمات مفتاحية من مجالك.',
-                experience: 'أضف تفاصيل لإنجازاتك في كل وظيفة، مستخدماً أرقاماً ونسباً مئوية لتوضيح تأثيرك.',
-                skills: 'أضف مهارات متنوعة واطلب توصيات للمهارات الرئيسية، واحرص على تحديثها بانتظام.',
-                recommendations: 'اطلب توصيات من زملاء ومديرين سابقين، واكتب توصيات للآخرين أيضاً.',
-                activity: 'انشر محتوى ذا قيمة بانتظام، شارك في المنشورات وعلق بمداخلات مفيدة.'
-            };
-            
-            // إضافة النصائح بناءً على التقييمات المنخفضة
-            Object.keys(ratings).forEach(category => {
-                if (ratings[category] <= 2) {
-                    const li = document.createElement('li');
-                    li.textContent = tips[category];
-                    tipsList.appendChild(li);
-                }
-            });
-            
-            // إذا كانت جميع التقييمات عالية، أضف نصائح عامة
-            if (tipsList.children.length === 0) {
-                const generalTips = [
-                    'واصل نشر محتوى قيم بانتظام لتعزيز مكانتك كخبير في مجالك.',
-                    'وسّع شبكتك بالتواصل مع محترفين في مجالك وحضور الفعاليات.',
-                    'استخدم ميزة النشر على لينكدإن لمشاركة مقالات أطول وأكثر تعمقاً.'
-                ];
+            // محاكاة اتصال بالذكاء الاصطناعي (3 ثواني)
+            setTimeout(() => {
+                // إخفاء التحميل
+                document.getElementById('loading').style.display = 'none';
                 
-                generalTips.forEach(tip => {
-                    const li = document.createElement('li');
-                    li.textContent = tip;
-                    tipsList.appendChild(li);
-                });
-            }
-            
-            // عرض نتيجة التقييم
-            document.getElementById('result').style.display = 'block';
-            
-            // التمرير إلى نتيجة التقييم
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+                // توليد تحليل عشوائي (في الواقع الفعلي سيكون من DeepSeek API)
+                generateAIAnalysis(linkedinUrl, userGoals);
+                
+                // إظهار النتيجة
+                document.getElementById('result').style.display = 'block';
+                
+                // التمرير إلى النتيجة
+                document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+            }, 3000);
         });
         
-        // إعادة تعيين النموذج
-        document.getElementById('resetBtn').addEventListener('click', function() {
-            // إعادة تعيين النجوم
-            document.querySelectorAll('.star').forEach(star => {
-                star.classList.remove('active');
-            });
+        function generateAIAnalysis(url, goals) {
+            // في الواقع الفعلي، هنا سيتم الاتصال بـ DeepSeek API
+            // لكن الآن سنعمل محاكاة للتحليل
             
-            document.querySelectorAll('.stars').forEach(starsContainer => {
-                starsContainer.removeAttribute('data-rating');
-            });
+            const strengthsList = [
+                '📸 صورتك الشخصية ممتازة واحترافية',
+                '✍️ قسم "About" مكتوب بطريقة مقنعة',
+                '🔗 لديك شبكة تواصل جيدة',
+                '💼 الخبرات العملية موثقة بشكل ممتاز',
+                '🏆 الإنجازات مدعومة بأرقام ونتائج'
+            ];
             
-            // إعادة تعيين الحقول
-            document.getElementById('profileUrl').value = '';
-            document.getElementById('name').value = '';
-            document.getElementById('industry').value = '';
-            document.getElementById('notes').value = '';
+            const improvementsList = [
+                '🌅 يمكنك إضافة صورة غلاف تعبر عن هويتك المهنية',
+                '🔍 قسم المهارات يحتاج إلى مزيد من التفصيل',
+                '📈 يمكنك زيادة التفاعل بالنشر المنتظم',
+                '🤝 حاول الحصول على المزيد من التوصيات',
+                '🎯 ركز أكثر على الكلمات المفتاحية في تخصصك'
+            ];
             
-            // إخفاء النتيجة
+            const tipsList = [
+                'انشر محتوى قيماً مرتين أسبوعياً على الأقل',
+                'شارك في التعليقات على منشورات الآخرين في مجالك',
+                'أضف مشاريع شخصية إلى قسم الخبرات',
+                'استخدم الكلمات المفتاحية المناسبة في العنوان',
+                'اطلبه توصيات من زملاء ومديرين سابقين'
+            ];
+            
+            // إضافة نصائح حسب الهدف
+            if (goals === 'job') {
+                tipsList.push('ركز على مهارات التوظيف المطلوبة في سوق العمل');
+                tipsList.push('أضف كلمات مفتاحية تبحث عنها شركات التوظيف');
+            } else if (goals === 'clients') {
+                tipsList.push('أنشئ محتوى يظهر خبرتك ويجذب العملاء المحتملين');
+                tipsList.push('شارك case studies لمشاريع ناجحة');
+            }
+            
+            // عرض النتائج
+            document.getElementById('score').textContent = '8.5/10';
+            
+            const strengthsElement = document.getElementById('strengths');
+            strengthsElement.innerHTML = strengthsList.map(strength => 
+                `<p>✅ ${strength}</p>`
+            ).join('');
+            
+            const improvementsElement = document.getElementById('improvements');
+            improvementsElement.innerHTML = improvementsList.map(improvement => 
+                `<p>🔧 ${improvement}</p>`
+            ).join('');
+            
+            const tipsListElement = document.getElementById('tipsList');
+            tipsListElement.innerHTML = tipsList.map(tip => 
+                `<li>${tip}</li>`
+            ).join('');
+        }
+        
+        // زر تحليل جديد
+        document.getElementById('newAnalysis').addEventListener('click', function() {
+            document.getElementById('linkedinUrl').value = '';
+            document.getElementById('userGoals').value = '';
             document.getElementById('result').style.display = 'none';
-            
-            // التمرير إلى الأعلى
+            document.getElementById('analyzeBtn').disabled = false;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     </script>
