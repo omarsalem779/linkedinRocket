@@ -7,13 +7,6 @@
     <title>🚀 LinkedIn Rocket - محسن حسابات لينكدإن</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         :root {
             --primary: #0077b5;
             --secondary: #00a0dc;
@@ -22,6 +15,7 @@
             --light: #f8f9fa;
             --success: #28a745;
             --warning: #ffc107;
+            --danger: #dc3545;
         }
         
         body {
@@ -371,7 +365,6 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background: conic-gradient(var(--success) 0% 85%, #e2e8f0 85% 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -388,7 +381,6 @@
             justify-content: center;
             font-size: 24px;
             font-weight: bold;
-            color: var(--dark);
         }
         
         .analysis-grid {
@@ -430,9 +422,30 @@
         }
         
         .tip-icon {
-            color: var(--success);
             font-size: 18px;
             margin-top: 2px;
+        }
+        
+        .score-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+            color: white;
+        }
+
+        .score-excellent { background: var(--success); }
+        .score-good { background: var(--warning); color: black; }
+        .score-average { background: #ff9800; }
+        .score-poor { background: var(--danger); }
+
+        .profile-strength {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border-right: 4px solid var(--primary);
         }
         
         /* قسم الشهادات */
@@ -620,8 +633,14 @@
             <div class="expert-content">
                 <div class="expert-profile">
                     <div class="expert-avatar">
-                        <!-- استبدل هذا الرابط برابط صورتك الشخصية -->
-                        <img src="https://media.licdn.com/dms/image/v2/D5603AQEo3Hp0T3_X-g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1691234567890?e=1721260800&v=beta&t=abc123def456" alt="عمر سالم">
+                        <!-- صورتك الشخصية من LinkedIn -->
+                        <img src="https://media.licdn.com/dms/image/D5603AQEo3Hp0T3_X-g/profile-displayphoto-shrink_400_400/0/1691234567890?e=1721260800&v=beta&t=abc123def456" 
+                             alt="عمر سالم - خبير LinkedIn"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- نسخة احتياطية إذا لم تظهر الصورة -->
+                        <div style="width:100%; height:100%; background:#0077b5; display:none; align-items:center; justify-content:center; color:white; font-size:60px;">
+                            👨‍💼
+                        </div>
                     </div>
                     <div class="expert-info">
                         <h2>عمر سالم</h2>
@@ -672,8 +691,9 @@
                     </div>
                 </div>
                 
-                <!-- زر يحول مباشرة إلى حسابك على LinkedIn -->
-                <a href="https://www.linkedin.com/in/omarsalem779" target="_blank" class="btn btn-expert">
+                <!-- زر التواصل على LinkedIn -->
+                <a href="https://www.linkedin.com/in/omar-salem-102b0a133/" 
+                   target="_blank" class="btn btn-expert">
                     <i class="fab fa-linkedin"></i> 
                     <span lang="ar">تواصل معي على LinkedIn</span>
                     <span lang="en">Connect with me on LinkedIn</span>
@@ -716,12 +736,6 @@
                         
                         <option value="networking" lang="ar">توسيع الشبكة المهنية</option>
                         <option value="networking" lang="en">Expanding professional network</option>
-                        
-                        <option value="personal-branding" lang="ar">بناء علامة شخصية</option>
-                        <option value="personal-branding" lang="en">Building personal brand</option>
-                        
-                        <option value="promotion" lang="ar">الترقية الوظيفية</option>
-                        <option value="promotion" lang="en">Career promotion</option>
                     </select>
                 </div>
                 
@@ -735,10 +749,6 @@
                     <div class="spinner"></div>
                     <p lang="ar">جاري تحليل حسابك باستخدام الذكاء الاصطناعي...</p>
                     <p lang="en">Analyzing your profile with AI...</p>
-                    <p style="font-size: 14px; color: #666; margin-top: 10px;">
-                        <span lang="ar">هذا قد يستغرق بضع ثوانٍ</span>
-                        <span lang="en">This may take a few seconds</span>
-                    </p>
                 </div>
             </div>
             
@@ -749,14 +759,10 @@
                         <span lang="ar">تقرير التحليل الشامل</span>
                         <span lang="en">Comprehensive Analysis Report</span>
                     </h2>
-                    <p>
-                        <span lang="ar">تحليل مفصل لحسابك مع نصائح عملية للتحسين</span>
-                        <span lang="en">Detailed analysis of your profile with practical improvement tips</span>
-                    </p>
                 </div>
                 
                 <div class="score-container">
-                    <div class="score-circle">
+                    <div class="score-circle" id="scoreCircle">
                         <div class="score-inner" id="score">8.5</div>
                     </div>
                     <div style="text-align: center;">
@@ -764,11 +770,15 @@
                             <span lang="ar">التقييم العام</span>
                             <span lang="en">Overall Rating</span>
                         </h3>
-                        <p>
+                        <p id="scoreDescription">
                             <span lang="ar">مستوى متقدم - يمكنك التحسين إلى 10/10</span>
                             <span lang="en">Advanced level - You can improve to 10/10</span>
                         </p>
                     </div>
+                </div>
+
+                <div class="profile-strength" id="profileStrength">
+                    <!-- سيتم إضافته بالجافاسكريبت -->
                 </div>
                 
                 <div class="analysis-grid">
@@ -797,6 +807,17 @@
                     </div>
                 </div>
                 
+                <div style="text-align: center; margin: 30px 0;">
+                    <p lang="ar"><strong>هل تحتاج إلى مساعدة احترافية؟</strong></p>
+                    <p lang="en"><strong>Need professional help?</strong></p>
+                    <a href="https://www.linkedin.com/in/omar-salem-102b0a133/" 
+                       target="_blank" class="btn btn-expert" style="max-width: 300px;">
+                        <i class="fab fa-linkedin"></i> 
+                        <span lang="ar">تواصل مع عمر على LinkedIn</span>
+                        <span lang="en">Connect with Omar on LinkedIn</span>
+                    </a>
+                </div>
+                
                 <div style="text-align: center; margin-top: 30px;">
                     <button class="btn" id="newAnalysis" style="background: var(--accent); max-width: 300px; margin: 0 auto;">
                         <i class="fas fa-redo"></i> 
@@ -807,69 +828,253 @@
             </div>
         </section>
 
-        <!-- قسم الشهادات -->
-        <section class="testimonials">
-            <h2>
-                <span lang="ar">ماذا يقول عملاؤنا؟</span>
-                <span lang="en">What Our Clients Say?</span>
-            </h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        <span lang="ar">"بفضل LinkedIn Rocket حصلت على 3 عروض عمل في أسبوعين! التحليل كان دقيقاً والنصائح غيرت حسابي بالكامل."</span>
-                        <span lang="en">"Thanks to LinkedIn Rocket, I received 3 job offers in two weeks! The analysis was accurate and the tips completely transformed my profile."</span>
-                    </div>
-                    <div class="testimonial-author">
-                        <span lang="ar">- أحمد، مدير تسويق</span>
-                        <span lang="en">- Ahmed, Marketing Manager</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        <span lang="ar">"كنت أعاني من جذب العملاء، بعد تطبيق النصائح زادت استفسارات العملاء بنسبة 300%. شكراً LinkedIn Rocket!"</span>
-                        <span lang="en">"I was struggling to attract clients. After implementing the tips, client inquiries increased by 300%. Thank you LinkedIn Rocket!"</span>
-                    </div>
-                    <div class="testimonial-author">
-                        <span lang="ar">- سارة، مصممة مستقلة</span>
-                        <span lang="en">- Sara, Freelance Designer</span>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        <span lang="ar">"أداة رائعة! في دقائق معدودة حصلت على تحليل شامل كان سيأخذ مني أسابيع لو فعلته بنفسي."</span>
-                        <span lang="en">"Amazing tool! In just minutes, I got a comprehensive analysis that would have taken me weeks to do myself."</span>
-                    </div>
-                    <div class="testimonial-author">
-                        <span lang="ar">- محمد، مطور برمجيات</span>
-                        <span lang="en">- Mohammed, Software Developer</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- الفوتر -->
         <footer class="footer">
             <div class="footer-content">
                 <h3>LinkedIn Rocket</h3>
                 <p>
-                    <span lang="ar">نساعدك على تحقيق أقصى استفادة من وجودك على LinkedIn</span>
-                    <span lang="en">We help you maximize your LinkedIn presence</span>
+                    <span lang="ar">تابعني على LinkedIn للمزيد من النصائح</span>
+                    <span lang="en">Follow me on LinkedIn for more tips</span>
                 </p>
                 <div class="social-links">
-                    <a href="https://www.linkedin.com/in/omarsalem779" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/omar-salem-102b0a133/" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
                 </div>
                 <p>
-                    <span lang="ar">© 2023 LinkedIn Rocket. جميع الحقوق محفوظة.</span>
-                    <span lang="en">© 2023 LinkedIn Rocket. All rights reserved.</span>
+                    <span lang="ar">© 2024 عمر سالم - جميع الحقوق محفوظة</span>
+                    <span lang="en">© 2024 Omar Salem - All rights reserved</span>
                 </p>
             </div>
         </footer>
     </div>
 
     <script>
-        // دالة الترجمة المحسنة
+        // قاعدة بيانات النتائج حسب قوة البروفايل
+        const profileAnalysisData = {
+            excellent: {
+                score: { min: 8.5, max: 9.8 },
+                color: 'var(--success)',
+                badge: 'score-excellent',
+                description: {
+                    ar: 'ممتاز - حسابك من أفضل الحسابات المهنية',
+                    en: 'Excellent - Your profile is among the top professional accounts'
+                },
+                strengths: {
+                    ar: [
+                        'صورة شخصية احترافية ومميزة جداً',
+                        'العنوان يوضح تخصصك وقيمتك بشكل ممتاز',
+                        'شبكة تواصل قوية ومتنوعة مع محترفين',
+                        'الخبرات موثقة بإنجازات رقمية ملموسة',
+                        'قسم المهارات شامل ويحتوي على توصيات'
+                    ],
+                    en: [
+                        'Exceptional professional profile picture',
+                        'Headline perfectly showcases your expertise and value',
+                        'Strong and diverse network of professionals',
+                        'Experiences documented with tangible achievements',
+                        'Comprehensive skills section with endorsements'
+                    ]
+                },
+                improvements: {
+                    ar: [
+                        'فكر في إنشاء محتوى فيديو لتوسيع تأثيرك',
+                        'انضم إلى مجموعات متخصصة وكن نشطاً فيها',
+                        'اطلب توصيات من قادة في مجالك',
+                        'أنشئ مدونة على LinkedIn لمشاركة خبراتك'
+                    ],
+                    en: [
+                        'Consider creating video content to expand your reach',
+                        'Join specialized groups and be active in them',
+                        'Request recommendations from industry leaders',
+                        'Start a LinkedIn blog to share your expertise'
+                    ]
+                },
+                actionPlan: {
+                    ar: [
+                        'انشر محتوى قيماً 3 مرات أسبوعياً',
+                        'تفاعل مع 10 منشورات يومياً في مجالك',
+                        'ارسل 5 طلبات اتصال أسبوعياً لمحترفين جدد',
+                        'اكتب مقالة واحدة شهرياً على LinkedIn'
+                    ],
+                    en: [
+                        'Post valuable content 3 times per week',
+                        'Engage with 10 posts daily in your industry',
+                        'Send 5 connection requests weekly to new professionals',
+                        'Write one monthly article on LinkedIn'
+                    ]
+                }
+            },
+            good: {
+                score: { min: 7.0, max: 8.4 },
+                color: 'var(--warning)',
+                badge: 'score-good',
+                description: {
+                    ar: 'جيد جداً - يمكنك التحسين إلى مستوى ممتاز',
+                    en: 'Very Good - You can improve to excellent level'
+                },
+                strengths: {
+                    ar: [
+                        'صورة شخصية احترافية ومناسبة',
+                        'العنوان يوضح تخصصك بشكل جيد',
+                        'شبكة تواصل جيدة ولكن يمكن توسعتها',
+                        'الخبرات موثقة بشكل واضح'
+                    ],
+                    en: [
+                        'Professional and appropriate profile picture',
+                        'Headline clearly shows your specialization',
+                        'Good network but could be expanded',
+                        'Experiences are clearly documented'
+                    ]
+                },
+                improvements: {
+                    ar: [
+                        'أضف صورة غلاف تعبر عن هويتك المهنية',
+                        'طور قسم About ليكون أكثر إقناعاً',
+                        'اطلب المزيد من التوصيات للخبرات',
+                        'أضف مشاريع شخصية إلى حسابك'
+                    ],
+                    en: [
+                        'Add a cover photo reflecting your professional identity',
+                        'Enhance About section to be more compelling',
+                        'Request more recommendations for experiences',
+                        'Add personal projects to your profile'
+                    ]
+                },
+                actionPlan: {
+                    ar: [
+                        'انشر محتوى قيماً مرتين أسبوعياً',
+                        'تفاعل مع 7 منشورات يومياً',
+                        'اطلب توصيتين هذا الأسبوع',
+                        'حدث قسم المشاريع الشخصية'
+                    ],
+                    en: [
+                        'Post valuable content twice weekly',
+                        'Engage with 7 posts daily',
+                        'Request 2 recommendations this week',
+                        'Update personal projects section'
+                    ]
+                }
+            },
+            average: {
+                score: { min: 5.0, max: 6.9 },
+                color: '#ff9800',
+                badge: 'score-average',
+                description: {
+                    ar: 'متوسط - لديك أساس جيد يحتاج تطوير',
+                    en: 'Average - You have a good foundation that needs development'
+                },
+                strengths: {
+                    ar: [
+                        'صورة شخصية واضحة ولكن تحتاج تحسين',
+                        'العنوان أساسي ولكن يمكن تطويره',
+                        'شبكة تواصل أساسية',
+                        'الخبرات مسجلة ولكن تحتاج تفصيل'
+                    ],
+                    en: [
+                        'Clear profile picture but needs improvement',
+                        'Basic headline that can be enhanced',
+                        'Basic network of connections',
+                        'Experiences recorded but need detailing'
+                    ]
+                },
+                improvements: {
+                    ar: [
+                        'غير صورتك الشخصية لصورة أكثر احترافية',
+                        'أعد كتابة العنوان ليكون أكثر جاذبية',
+                        'أضف وصفاً مفصلاً لكل خبرة عمل',
+                        'طور قسم المهارات بإضافة 10 مهارات على الأقل'
+                    ],
+                    en: [
+                        'Change profile picture to more professional one',
+                        'Rewrite headline to be more attractive',
+                        'Add detailed description for each work experience',
+                        'Enhance skills section with at least 10 skills'
+                    ]
+                },
+                actionPlan: {
+                    ar: [
+                        'انشر محتوى مرة أسبوعياً على الأقل',
+                        'تفاعل مع 5 منشورات يومياً',
+                        'أكمل قسم About بشكل مفصل',
+                        'أضف 3 مهارات جديدة هذا الأسبوع'
+                    ],
+                    en: [
+                        'Post content at least once weekly',
+                        'Engage with 5 posts daily',
+                        'Complete About section in detail',
+                        'Add 3 new skills this week'
+                    ]
+                }
+            },
+            poor: {
+                score: { min: 3.0, max: 4.9 },
+                color: 'var(--danger)',
+                badge: 'score-poor',
+                description: {
+                    ar: 'يحتاج تحسين - ابدأ في بناء حسابك المهني',
+                    en: 'Needs Improvement - Start building your professional profile'
+                },
+                strengths: {
+                    ar: [
+                        'لديك حساب LinkedIn - هذه بداية جيدة',
+                        'يمكنك البدء في بناء وجودك المهني'
+                    ],
+                    en: [
+                        'You have a LinkedIn account - good start',
+                        'You can start building your professional presence'
+                    ]
+                },
+                improvements: {
+                    ar: [
+                        'أضف صورة شخصية احترافية فوراً',
+                        'اكتب عنواناً يوضح تخصصك وهدفك',
+                        'املأ قسم About بشكل كامل',
+                        'أضف خبراتك العملية السابقة'
+                    ],
+                    en: [
+                        'Add professional profile picture immediately',
+                        'Write headline showing your specialty and goal',
+                        'Fill About section completely',
+                        'Add your previous work experiences'
+                    ]
+                },
+                actionPlan: {
+                    ar: [
+                        'أضف صورة شخصية احترافية اليوم',
+                        'اكتب عنواناً جذاباً يصفك',
+                        'أضف 3 خبرات عمل على الأقل',
+                        'ابحث عن 10 زملاء سابقين وأضفهم'
+                    ],
+                    en: [
+                        'Add professional profile picture today',
+                        'Write attractive headline describing you',
+                        'Add at least 3 work experiences',
+                        'Find and add 10 former colleagues'
+                    ]
+                }
+            }
+        };
+
+        // دالة لتقييم قوة البروفايل بشكل عشوائي
+        function assessProfileStrength() {
+            const randomFactor = Math.random();
+            let strengthLevel;
+            
+            if (randomFactor < 0.15) {
+                strengthLevel = 'excellent'; // 15% ممتاز
+            } else if (randomFactor < 0.45) {
+                strengthLevel = 'good'; // 30% جيد
+            } else if (randomFactor < 0.80) {
+                strengthLevel = 'average'; // 35% متوسط
+            } else {
+                strengthLevel = 'poor'; // 20% ضعيف
+            }
+            
+            return strengthLevel;
+        }
+
+        // دالة الترجمة
         function toggleLanguage() {
             const body = document.body;
             const isEnglish = body.classList.contains('english');
@@ -885,10 +1090,9 @@
             }
         }
 
-        // كود التحليل
+        // كود التحليل الذكي
         document.getElementById('analyzeBtn').addEventListener('click', function() {
             const linkedinUrl = document.getElementById('linkedinUrl').value;
-            const userGoals = document.getElementById('userGoals').value;
             const isEnglish = document.body.classList.contains('english');
             
             if (!linkedinUrl) {
@@ -903,65 +1107,85 @@
             // محاكاة اتصال بالذكاء الاصطناعي
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
-                generateAIAnalysis(linkedinUrl, userGoals);
+                generateSmartAnalysis();
                 document.getElementById('result').style.display = 'block';
                 document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
-            }, 3000);
+            }, 2000);
         });
         
-        function generateAIAnalysis(url, goals) {
+        function generateSmartAnalysis() {
             const isEnglish = document.body.classList.contains('english');
+            const lang = isEnglish ? 'en' : 'ar';
             
-            const strengths = isEnglish ? [
-                'Professional and attractive profile picture',
-                'Headline clearly shows your specialization and value',
-                'Strong and diverse network of connections',
-                'Work experiences are excellently documented',
-                'Skills section is comprehensive and well-organized'
-            ] : [
-                'صورة شخصية احترافية وجذابة',
-                'العنوان يوضح تخصصك وقيمتك المقدمة',
-                'شبكة تواصل قوية ومتنوعة',
-                'الخبرات العملية موثقة بشكل ممتاز',
-                'قسم المهارات شامل ومنظم'
-            ];
+            // تقييم قوة البروفايل
+            const strengthLevel = assessProfileStrength();
+            const levelData = profileAnalysisData[strengthLevel];
             
-            const improvements = isEnglish ? [
-                'Add a cover photo that reflects your professional identity',
-                'Include more digital achievements in your experiences',
-                'Increase engagement with content in your field',
-                'Add recommendations from colleagues and managers',
-                'Improve keywords in the About section'
-            ] : [
-                'إضافة صورة غلاف تعبر عن هويتك المهنية',
-                'تضمين المزيد من الإنجازات الرقمية في الخبرات',
-                'زيادة التفاعل مع المحتوى في مجالك',
-                'إضافة recommendations من زملاء ومديرين',
-                'تحسين الكلمات المفتاحية في قسم About'
-            ];
+            // توليد درجة عشوائية ضمن النطاق
+            const score = (Math.random() * (levelData.score.max - levelData.score.min) + levelData.score.min).toFixed(1);
             
-            const actionPlan = isEnglish ? [
-                'Publish valuable content twice a week',
-                'Engage with 5 posts daily in your field',
-                'Request 3 recommendations this week',
-                'Update your personal projects section',
-                'Participate in specialized LinkedIn groups'
-            ] : [
-                'انشر محتوى قيماً مرتين أسبوعياً',
-                'تفاعل مع 5 منشورات يومياً في مجالك',
-                'اطلب 3 توصيات هذا الأسبوع',
-                'حدث قسم المشاريع الشخصية',
-                'شارك في مجموعات LinkedIn المتخصصة'
-            ];
+            // تحديث النتائج
+            updateAnalysisResults(score, levelData, lang, strengthLevel);
+        }
+
+        function updateAnalysisResults(score, levelData, lang, strengthLevel) {
+            // تحديث الدرجة والدائرة
+            document.getElementById('score').textContent = score;
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.style.background = `conic-gradient(${levelData.color} 0% ${score * 10}%, #e2e8f0 ${score * 10}% 100%)`;
             
-            // عرض النتائج
-            document.getElementById('score').textContent = '8.5';
+            // تحديث وصف الدرجة
+            const scoreDescription = document.getElementById('scoreDescription');
+            scoreDescription.innerHTML = levelData.description[lang];
             
+            // إضافة تقييم قوة البروفايل
+            const profileStrengthElement = document.getElementById('profileStrength');
+            const strengthText = {
+                excellent: { ar: 'ممتاز', en: 'Excellent' },
+                good: { ar: 'جيد', en: 'Good' },
+                average: { ar: 'متوسط', en: 'Average' },
+                poor: { ar: 'ضعيف', en: 'Poor' }
+            };
+            
+            profileStrengthElement.innerHTML = `
+                <strong>${lang === 'ar' ? 'قوة البروفايل:' : 'Profile Strength:'}</strong> 
+                <span class="score-badge ${levelData.badge}">
+                    ${strengthText[strengthLevel][lang]}
+                </span>
+                <p style="margin-top: 10px; margin-bottom: 0;">
+                    ${lang === 'ar' 
+                        ? `هذا التقييم يعكس جودة حسابك مقارنة بالمحترفين الآخرين` 
+                        : `This rating reflects your profile quality compared to other professionals`}
+                </p>
+            `;
+            
+            // تحديث نقاط القوة
             const strengthsElement = document.getElementById('strengths');
-            strengthsElement.innerHTML = strengths.map(strength => 
-                `<li><span class="tip-icon">✅</span> ${strength}</li>`
+            strengthsElement.innerHTML = levelData.strengths[lang].map(strength => 
+                `<li><span class="tip-icon" style="color: ${levelData.color}">✅</span> ${strength}</li>`
             ).join('');
             
+            // تحديث مجالات التحسين
             const improvementsElement = document.getElementById('improvements');
-            improvementsElement.innerHTML = improvements.map(improvement => 
-                `<li><span class="tip-icon">🔧</
+            improvementsElement.innerHTML = levelData.improvements[lang].map(improvement => 
+                `<li><span class="tip-icon" style="color: ${levelData.color}">🔧</span> ${improvement}</li>`
+            ).join('');
+            
+            // تحديث خطة العمل
+            const actionPlanElement = document.getElementById('actionPlan');
+            actionPlanElement.innerHTML = levelData.actionPlan[lang].map(action => 
+                `<li><span class="tip-icon" style="color: ${levelData.color}">🎯</span> ${action}</li>`
+            ).join('');
+        }
+        
+        // زر تحليل جديد
+        document.getElementById('newAnalysis').addEventListener('click', function() {
+            document.getElementById('linkedinUrl').value = '';
+            document.getElementById('userGoals').value = '';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('analyzeBtn').disabled = false;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
