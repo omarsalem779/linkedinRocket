@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -511,6 +510,14 @@
             color: var(--accent);
         }
 
+        .copyright {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
         /* إصلاح الترجمة */
         [lang="ar"] { display: block; }
         [lang="en"] { display: none; }
@@ -841,10 +848,18 @@
                         <i class="fab fa-linkedin"></i>
                     </a>
                 </div>
-                <p>
-                    <span lang="ar">© 2024 عمر سالم - جميع الحقوق محفوظة</span>
-                    <span lang="en">© 2024 Omar Salem - All rights reserved</span>
-                </p>
+                
+                <!-- حقوق النشر مع سنة 2025 -->
+                <div class="copyright">
+                    <p>
+                        <span lang="ar">© 2025 LinkedIn Rocket - تم التطوير بواسطة عمر سالم</span>
+                        <span lang="en">© 2025 LinkedIn Rocket - Developed by Omar Salem</span>
+                    </p>
+                    <p style="font-size: 12px; opacity: 0.7; margin-top: 5px;">
+                        <span lang="ar">جميع الحقوق محفوظة</span>
+                        <span lang="en">All rights reserved</span>
+                    </p>
+                </div>
             </div>
         </footer>
     </div>
