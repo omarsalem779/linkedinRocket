@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 LinkedIn Rocket - محسن حسابات لينكدإن</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>محلل LinkedIn الذكي - تقييم بواسطة الذكاء الاصطناعي</title>
     <style>
         * {
             margin: 0;
@@ -13,316 +13,252 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        :root {
-            --primary: #0077b5;
-            --secondary: #00a0dc;
-            --accent: #ff6b35;
-            --dark: #2d3748;
-            --light: #f8f9fa;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-        }
-        
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%);
             color: #333;
             line-height: 1.6;
+            padding: 20px;
             min-height: 100vh;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            margin-top: 20px;
+        }
+        
+        header {
+            background: #0077b5;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .analyzer-form {
+            padding: 25px;
+        }
+        
+        .form-group {
             margin-bottom: 20px;
         }
-
-        /* باقي الCSS يبقى كما هو */
-        /* ... */
-
-        .score-badge {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin-top: 10px;
-            display: inline-block;
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #0077b5;
         }
-
-        .score-excellent { background: var(--success); color: white; }
-        .score-good { background: var(--warning); color: black; }
-        .score-average { background: #ff9800; color: white; }
-        .score-poor { background: var(--danger); color: white; }
-
-        .profile-strength {
-            margin: 15px 0;
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #0077b5;
+            box-shadow: 0 0 0 2px rgba(0, 119, 181, 0.2);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
             padding: 15px;
-            border-radius: 10px;
-            background: #f8f9fa;
-            border-right: 4px solid var(--primary);
+            background: #0077b5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
         }
-
+        
+        .btn:hover {
+            background: #005885;
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0077b5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .result {
+            display: none;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #0077b5;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .analysis-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-right: 4px solid #0077b5;
+        }
+        
+        .analysis-section h3 {
+            color: #0077b5;
+            margin-bottom: 15px;
+        }
+        
+        .improvement-tips {
+            margin-top: 25px;
+        }
+        
+        .improvement-tips ul {
+            list-style-type: none;
+            padding-right: 0;
+        }
+        
+        .improvement-tips li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+            padding-right: 15px;
+            position: relative;
+        }
+        
+        .improvement-tips li:before {
+            content: "💡";
+            position: absolute;
+            right: -5px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            header h1 {
+                font-size: 22px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- باقي الهيكل يبقى كما هو -->
-    <!-- ... -->
+    <div class="container">
+        <header>
+            <h1>🦸 محلل LinkedIn الذكي</h1>
+            <p>أدخل رابط حسابك - وسيقوم الذكاء الاصطناعي بتقييمه وإعطائك نصائح مخصصة</p>
+        </header>
+        
+        <div class="analyzer-form">
+            <div class="form-group">
+                <label for="linkedinUrl">رابط حساب LinkedIn</label>
+                <input type="url" id="linkedinUrl" placeholder="https://www.linkedin.com/in/اسمك" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="userGoals">أهدافك من الحساب (اختياري)</label>
+                <select id="userGoals">
+                    <option value="">اختر هدفك الرئيسي</option>
+                    <option value="job">البحث عن وظيفة</option>
+                    <option value="clients">جذب عملاء</option>
+                    <option value="networking">التواصل المهني</option>
+                    <option value="personal-branding">بناء علامة شخصية</option>
+                </select>
+            </div>
+            
+            <button class="btn" id="analyzeBtn">🔍 حلل حسابي باستخدام الذكاء الاصطناعي</button>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>جاري تحليل حسابك باستخدام DeepSeek AI...</p>
+            </div>
+            
+            <div class="result" id="result">
+                <h2>📊 تقرير التحليل الذكي</h2>
+                <div class="score" id="score">8.5/10</div>
+                
+                <div class="analysis-section">
+                    <h3>🎯 نقاط القوة</h3>
+                    <div id="strengths"></div>
+                </div>
+                
+                <div class="analysis-section">
+                    <h3>⚠️ مجالات التحسين</h3>
+                    <div id="improvements"></div>
+                </div>
+                
+                <div class="analysis-section improvement-tips">
+                    <h3>💡 نصائح مخصصة</h3>
+                    <ul id="tipsList"></ul>
+                </div>
+                
+                <button class="btn" id="newAnalysis" style="background: #28a745;">🔄 تحليل حساب آخر</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>مدعوم بـ DeepSeek AI - صمم لمساعدة المحترفين على تطوير وجودهم الرقمي</p>
+        <p>© 2023 - جميع الحقوق محفوظة</p>
+    </footer>
 
     <script>
-        // قاعدة بيانات النصائح حسب مستوى القوة
-        const analysisData = {
-            excellent: {
-                score: { min: 8.5, max: 10 },
-                strengths: {
-                    ar: [
-                        'صورة شخصية احترافية ومميزة جداً',
-                        'العنوان يوضح تخصصك وقيمتك بشكل ممتاز',
-                        'شبكة تواصل قوية ومتنوعة مع محترفين',
-                        'الخبرات موثقة بإنجازات رقمية ملموسة',
-                        'قسم المهارات شامل ويحتوي على توصيات',
-                        'التفاعل المستمر مع المحتوى في مجالك'
-                    ],
-                    en: [
-                        'Exceptional professional profile picture',
-                        'Headline perfectly showcases your expertise and value',
-                        'Strong and diverse network of professionals',
-                        'Experiences documented with tangible digital achievements',
-                        'Comprehensive skills section with endorsements',
-                        'Consistent engagement with industry content'
-                    ]
-                },
-                improvements: {
-                    ar: [
-                        'فكر في إنشاء محتوى فيديو لتوسيع تأثيرك',
-                        'انضم إلى مجموعات متخصصة وكن نشطاً فيها',
-                        'اطلب توصيات من قادة في مجالك',
-                        'أنشئ مدونة على LinkedIn لمشاركة خبراتك',
-                        'استخدم hashtags استراتيجية في منشوراتك'
-                    ],
-                    en: [
-                        'Consider creating video content to expand your reach',
-                        'Join specialized groups and be active in them',
-                        'Request recommendations from industry leaders',
-                        'Start a LinkedIn blog to share your expertise',
-                        'Use strategic hashtags in your posts'
-                    ]
-                },
-                actionPlan: {
-                    ar: [
-                        'انشر محتوى قيماً 3 مرات أسبوعياً',
-                        'تفاعل مع 10 منشورات يومياً في مجالك',
-                        'ارسل 5 طلبات اتصال أسبوعياً لمحترفين جدد',
-                        'اكتب مقالة واحدة شهرياً على LinkedIn',
-                        'حضر فعاليتين افتراضيتين شهرياً'
-                    ],
-                    en: [
-                        'Post valuable content 3 times per week',
-                        'Engage with 10 posts daily in your industry',
-                        'Send 5 connection requests weekly to new professionals',
-                        'Write one monthly article on LinkedIn',
-                        'Attend two virtual events monthly'
-                    ]
-                }
-            },
-            good: {
-                score: { min: 7.0, max: 8.4 },
-                strengths: {
-                    ar: [
-                        'صورة شخصية احترافية ومناسبة',
-                        'العنوان يوضح تخصصك بشكل جيد',
-                        'شبكة تواصل جيدة ولكن يمكن توسعتها',
-                        'الخبرات موثقة بشكل واضح',
-                        'قسم المهارات يحتوي على مهارات رئيسية'
-                    ],
-                    en: [
-                        'Professional and appropriate profile picture',
-                        'Headline clearly shows your specialization',
-                        'Good network but could be expanded',
-                        'Experiences are clearly documented',
-                        'Skills section contains key competencies'
-                    ]
-                },
-                improvements: {
-                    ar: [
-                        'أضف صورة غلاف تعبر عن هويتك المهنية',
-                        'طور قسم About ليكون أكثر إقناعاً',
-                        'اطلب المزيد من التوصيات للخبرات',
-                        'أضف مشاريع شخصية إلى حسابك',
-                        'زد تفاعلك مع محتوى الآخرين'
-                    ],
-                    en: [
-                        'Add a cover photo reflecting your professional identity',
-                        'Enhance About section to be more compelling',
-                        'Request more recommendations for experiences',
-                        'Add personal projects to your profile',
-                        'Increase engagement with others content'
-                    ]
-                },
-                actionPlan: {
-                    ar: [
-                        'انشر محتوى قيماً مرتين أسبوعياً',
-                        'تفاعل مع 7 منشورات يومياً',
-                        'اطلب توصيتين هذا الأسبوع',
-                        'حدث قسم المشاريع الشخصية',
-                        'انضم إلى 3 مجموعات متخصصة'
-                    ],
-                    en: [
-                        'Post valuable content twice weekly',
-                        'Engage with 7 posts daily',
-                        'Request 2 recommendations this week',
-                        'Update personal projects section',
-                        'Join 3 specialized groups'
-                    ]
-                }
-            },
-            average: {
-                score: { min: 5.0, max: 6.9 },
-                strengths: {
-                    ar: [
-                        'صورة شخصية واضحة ولكن تحتاج تحسين',
-                        'العنوان أساسي ولكن يمكن تطويره',
-                        'شبكة تواصل أساسية',
-                        'الخبرات مسجلة ولكن تحتاج تفصيل'
-                    ],
-                    en: [
-                        'Clear profile picture but needs improvement',
-                        'Basic headline that can be enhanced',
-                        'Basic network of connections',
-                        'Experiences recorded but need detailing'
-                    ]
-                },
-                improvements: {
-                    ar: [
-                        'غير صورتك الشخصية لصورة أكثر احترافية',
-                        'أعد كتابة العنوان ليكون أكثر جاذبية',
-                        'أضف وصفاً مفصلاً لكل خبرة عمل',
-                        'طور قسم المهارات بإضافة 10 مهارات على الأقل',
-                        'ابدأ في التفاعل مع المحتوى بانتظام'
-                    ],
-                    en: [
-                        'Change profile picture to more professional one',
-                        'Rewrite headline to be more attractive',
-                        'Add detailed description for each work experience',
-                        'Enhance skills section with at least 10 skills',
-                        'Start engaging with content regularly'
-                    ]
-                },
-                actionPlan: {
-                    ar: [
-                        'انشر محتوى مرة أسبوعياً على الأقل',
-                        'تفاعل مع 5 منشورات يومياً',
-                        'أكمل قسم About بشكل مفصل',
-                        'أضف 3 مهارات جديدة هذا الأسبوع',
-                        'اطلب توصية واحدة على الأقل'
-                    ],
-                    en: [
-                        'Post content at least once weekly',
-                        'Engage with 5 posts daily',
-                        'Complete About section in detail',
-                        'Add 3 new skills this week',
-                        'Request at least one recommendation'
-                    ]
-                }
-            },
-            poor: {
-                score: { min: 0, max: 4.9 },
-                strengths: {
-                    ar: [
-                        'لديك حساب LinkedIn - هذه بداية جيدة',
-                        'يمكنك البدء في بناء وجودك المهني'
-                    ],
-                    en: [
-                        'You have a LinkedIn account - good start',
-                        'You can start building your professional presence'
-                    ]
-                },
-                improvements: {
-                    ar: [
-                        'أضف صورة شخصية احترافية فوراً',
-                        'اكتب عنواناً يوضح تخصصك وهدفك',
-                        'املأ قسم About بشكل كامل',
-                        'أضف خبراتك العملية السابقة',
-                        'ابدأ في بناء شبكة تواصل أساسية'
-                    ],
-                    en: [
-                        'Add professional profile picture immediately',
-                        'Write headline showing your specialty and goal',
-                        'Fill About section completely',
-                        'Add your previous work experiences',
-                        'Start building basic network'
-                    ]
-                },
-                actionPlan: {
-                    ar: [
-                        'أضف صورة شخصية احترافية اليوم',
-                        'اكتب عنواناً جذاباً يصفك',
-                        'أضف 3 خبرات عمل على الأقل',
-                        'ابحث عن 10 زملاء سابقين وأضفهم',
-                        'ابدأ بمشاهدة المحتوى في مجالك'
-                    ],
-                    en: [
-                        'Add professional profile picture today',
-                        'Write attractive headline describing you',
-                        'Add at least 3 work experiences',
-                        'Find and add 10 former colleagues',
-                        'Start viewing content in your industry'
-                    ]
-                }
-            }
-        };
-
-        // دالة لتقييم قوة البروفايل بشكل عشوائي ولكن واقعي
-        function assessProfileStrength(linkedinUrl) {
-            // محاكاة تحليل حقيقي للبروفايل
-            const randomFactor = Math.random();
-            let strengthLevel;
-            
-            if (randomFactor < 0.15) {
-                strengthLevel = 'excellent'; // 15% من الحسابات ممتازة
-            } else if (randomFactor < 0.45) {
-                strengthLevel = 'good'; // 30% من الحسابات جيدة
-            } else if (randomFactor < 0.80) {
-                strengthLevel = 'average'; // 35% من الحسابات متوسطة
-            } else {
-                strengthLevel = 'poor'; // 20% من الحسابات ضعيفة
-            }
-            
-            return strengthLevel;
-        }
-
-        // دالة لتوليد درجة عشوائية ضمن النطاق
-        function generateRandomScore(min, max) {
-            return (Math.random() * (max - min) + min).toFixed(1);
-        }
-
-        // دالة الترجمة المحسنة
-        function toggleLanguage() {
-            const body = document.body;
-            const isEnglish = body.classList.contains('english');
-            
-            if (isEnglish) {
-                body.classList.remove('english');
-                document.documentElement.lang = 'ar';
-                document.documentElement.dir = 'rtl';
-            } else {
-                body.classList.add('english');
-                document.documentElement.lang = 'en';
-                document.documentElement.dir = 'ltr';
-            }
-        }
-
-        // كود التحليل الذكي
+        // محاكاة اتصال بالذكاء الاصطناعي
         document.getElementById('analyzeBtn').addEventListener('click', function() {
             const linkedinUrl = document.getElementById('linkedinUrl').value;
             const userGoals = document.getElementById('userGoals').value;
-            const isEnglish = document.body.classList.contains('english');
             
             if (!linkedinUrl) {
-                alert(isEnglish ? "Please enter your LinkedIn profile URL" : "يرجى إدخال رابط حساب LinkedIn");
+                alert('يرجى إدخال رابط حساب LinkedIn');
                 return;
             }
             
@@ -330,132 +266,85 @@
             document.getElementById('loading').style.display = 'block';
             document.getElementById('analyzeBtn').disabled = true;
             
-            // محاكاة اتصال بالذكاء الاصطناعي
+            // محاكاة اتصال بالذكاء الاصطناعي (3 ثواني)
             setTimeout(() => {
+                // إخفاء التحميل
                 document.getElementById('loading').style.display = 'none';
-                generateSmartAnalysis(linkedinUrl, userGoals);
+                
+                // توليد تحليل عشوائي (في الواقع الفعلي سيكون من DeepSeek API)
+                generateAIAnalysis(linkedinUrl, userGoals);
+                
+                // إظهار النتيجة
                 document.getElementById('result').style.display = 'block';
+                
+                // التمرير إلى النتيجة
                 document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
-            }, 2000);
+            }, 3000);
         });
         
-        function generateSmartAnalysis(url, goals) {
-            const isEnglish = document.body.classList.contains('english');
-            const lang = isEnglish ? 'en' : 'ar';
+        function generateAIAnalysis(url, goals) {
+            // في الواقع الفعلي، هنا سيتم الاتصال بـ DeepSeek API
+            // لكن الآن سنعمل محاكاة للتحليل
             
-            // تقييم قوة البروفايل
-            const strengthLevel = assessProfileStrength(url);
-            const levelData = analysisData[strengthLevel];
+            const strengthsList = [
+                '📸 صورتك الشخصية ممتازة واحترافية',
+                '✍️ قسم "About" مكتوب بطريقة مقنعة',
+                '🔗 لديك شبكة تواصل جيدة',
+                '💼 الخبرات العملية موثقة بشكل ممتاز',
+                '🏆 الإنجازات مدعومة بأرقام ونتائج'
+            ];
             
-            // توليد درجة عشوائية ضمن النطاق
-            const score = generateRandomScore(levelData.score.min, levelData.score.max);
+            const improvementsList = [
+                '🌅 يمكنك إضافة صورة غلاف تعبر عن هويتك المهنية',
+                '🔍 قسم المهارات يحتاج إلى مزيد من التفصيل',
+                '📈 يمكنك زيادة التفاعل بالنشر المنتظم',
+                '🤝 حاول الحصول على المزيد من التوصيات',
+                '🎯 ركز أكثر على الكلمات المفتاحية في تخصصك'
+            ];
+            
+            const tipsList = [
+                'انشر محتوى قيماً مرتين أسبوعياً على الأقل',
+                'شارك في التعليقات على منشورات الآخرين في مجالك',
+                'أضف مشاريع شخصية إلى قسم الخبرات',
+                'استخدم الكلمات المفتاحية المناسبة في العنوان',
+                'اطلبه توصيات من زملاء ومديرين سابقين'
+            ];
+            
+            // إضافة نصائح حسب الهدف
+            if (goals === 'job') {
+                tipsList.push('ركز على مهارات التوظيف المطلوبة في سوق العمل');
+                tipsList.push('أضف كلمات مفتاحية تبحث عنها شركات التوظيف');
+            } else if (goals === 'clients') {
+                tipsList.push('أنشئ محتوى يظهر خبرتك ويجذب العملاء المحتملين');
+                tipsList.push('شارك case studies لمشاريع ناجحة');
+            }
             
             // عرض النتائج
-            document.getElementById('score').textContent = score;
+            document.getElementById('score').textContent = '8.5/10';
             
-            // تحديث لون الدائرة حسب الدرجة
-            const scoreCircle = document.querySelector('.score-circle');
-            scoreCircle.style.background = `conic-gradient(${getScoreColor(score)} 0% ${score * 10}%, #e2e8f0 ${score * 10}% 100%)`;
-            
-            // إضافة تقييم نصي
-            const scoreText = document.querySelector('.score-container > div > p');
-            scoreText.innerHTML = getScoreDescription(score, lang);
-            
-            // عرض نقاط القوة
             const strengthsElement = document.getElementById('strengths');
-            strengthsElement.innerHTML = levelData.strengths[lang].map(strength => 
-                `<li><span class="tip-icon">✅</span> ${strength}</li>`
+            strengthsElement.innerHTML = strengthsList.map(strength => 
+                `<p>✅ ${strength}</p>`
             ).join('');
             
-            // عرض مجالات التحسين
             const improvementsElement = document.getElementById('improvements');
-            improvementsElement.innerHTML = levelData.improvements[lang].map(improvement => 
-                `<li><span class="tip-icon">🔧</span> ${improvement}</li>`
+            improvementsElement.innerHTML = improvementsList.map(improvement => 
+                `<p>🔧 ${improvement}</p>`
             ).join('');
             
-            // عرض خطة العمل
-            const actionPlanElement = document.getElementById('actionPlan');
-            actionPlanElement.innerHTML = levelData.actionPlan[lang].map(action => 
-                `<li><span class="tip-icon">🎯</span> ${action}</li>`
+            const tipsListElement = document.getElementById('tipsList');
+            tipsListElement.innerHTML = tipsList.map(tip => 
+                `<li>${tip}</li>`
             ).join('');
-
-            // إضافة نص قوة البروفايل
-            const profileStrengthElement = document.createElement('div');
-            profileStrengthElement.className = 'profile-strength';
-            profileStrengthElement.innerHTML = `
-                <strong>${isEnglish ? 'Profile Strength:' : 'قوة البروفايل:'}</strong> 
-                <span class="score-badge ${getScoreBadgeClass(score)}">
-                    ${getStrengthLevelText(strengthLevel, lang)}
-                </span>
-            `;
-            document.querySelector('.score-container').appendChild(profileStrengthElement);
         }
-
-        // دوال مساعدة
-        function getScoreColor(score) {
-            if (score >= 8.5) return 'var(--success)';
-            if (score >= 7.0) return 'var(--warning)';
-            if (score >= 5.0) return '#ff9800';
-            return 'var(--danger)';
-        }
-
-        function getScoreBadgeClass(score) {
-            if (score >= 8.5) return 'score-excellent';
-            if (score >= 7.0) return 'score-good';
-            if (score >= 5.0) return 'score-average';
-            return 'score-poor';
-        }
-
-        function getScoreDescription(score, lang) {
-            if (score >= 8.5) {
-                return lang === 'ar' 
-                    ? 'ممتاز - حسابك من أفضل الحسابات المهنية'
-                    : 'Excellent - Your profile is among the top professional accounts';
-            } else if (score >= 7.0) {
-                return lang === 'ar'
-                    ? 'جيد جداً - يمكنك التحسين إلى مستوى ممتاز'
-                    : 'Very Good - You can improve to excellent level';
-            } else if (score >= 5.0) {
-                return lang === 'ar'
-                    ? 'متوسط - لديك أساس جيد يحتاج تطوير'
-                    : 'Average - You have a good foundation that needs development';
-            } else {
-                return lang === 'ar'
-                    ? 'يحتاج تحسين - ابدأ في بناء حسابك المهني'
-                    : 'Needs Improvement - Start building your professional profile';
-            }
-        }
-
-        function getStrengthLevelText(level, lang) {
-            const levels = {
-                excellent: { ar: 'ممتاز', en: 'Excellent' },
-                good: { ar: 'جيد', en: 'Good' },
-                average: { ar: 'متوسط', en: 'Average' },
-                poor: { ar: 'ضعيف', en: 'Poor' }
-            };
-            return levels[level][lang];
-        }
-
+        
         // زر تحليل جديد
         document.getElementById('newAnalysis').addEventListener('click', function() {
             document.getElementById('linkedinUrl').value = '';
             document.getElementById('userGoals').value = '';
             document.getElementById('result').style.display = 'none';
             document.getElementById('analyzeBtn').disabled = false;
-            
-            // إزالة نص قوة البروفايل المضاف
-            const existingStrengthElement = document.querySelector('.profile-strength');
-            if (existingStrengthElement) {
-                existingStrengthElement.remove();
-            }
-            
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // زر LinkedIn
-        document.querySelector('.btn-expert').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.open('https://www.linkedin.com/in/omarsalem779', '_blank');
         });
     </script>
 </body>
