@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0077b5;
-            --secondary: #00a0dc;
-            --accent: #ff6b35;
-            --dark: #2d3748;
-            --light: #f8f9fa;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
+            --primary: #dc2626; /* أحمر */
+            --secondary: #b91c1c; /* أحمر داكن */
+            --accent: #f59e0b; /* أصفر */
+            --dark: #1f2937;
+            --light: #fef2f2; /* أحمر فاتح جداً */
+            --success: #16a34a;
+            --warning: #f59e0b;
+            --danger: #dc2626;
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #dc2626 0%, #f59e0b 100%);
             color: #333;
             line-height: 1.6;
             min-height: 100vh;
@@ -169,7 +169,7 @@
         /* قسم عمر سالم */
         .expert-section {
             padding: 60px 30px;
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             color: white;
             text-align: center;
         }
@@ -273,7 +273,7 @@
             font-size: 16px;
         }
         
-        input, select, textarea {
+        input, select {
             width: 100%;
             padding: 15px 20px;
             border: 2px solid #e2e8f0;
@@ -282,10 +282,10 @@
             transition: all 0.3s;
         }
         
-        input:focus, select:focus, textarea:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 119, 181, 0.1);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
         
         .btn {
@@ -307,7 +307,7 @@
         
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 119, 181, 0.3);
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
         }
         
         .btn:active {
@@ -315,7 +315,7 @@
         }
 
         .btn-expert {
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             max-width: 400px;
             margin: 20px auto;
             display: inline-block;
@@ -436,48 +436,15 @@
 
         .score-excellent { background: var(--success); }
         .score-good { background: var(--warning); color: black; }
-        .score-average { background: #ff9800; }
+        .score-average { background: #f59e0b; color: black; }
         .score-poor { background: var(--danger); }
 
         .profile-strength {
             margin: 15px 0;
             padding: 15px;
             border-radius: 10px;
-            background: #f8f9fa;
+            background: #fef2f2;
             border-right: 4px solid var(--primary);
-        }
-        
-        /* قسم الشهادات */
-        .testimonials {
-            padding: 60px 30px;
-            background: linear-gradient(135deg, var(--dark) 0%, #4a5568 100%);
-            color: white;
-            text-align: center;
-        }
-        
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 20px;
-            line-height: 1.8;
-        }
-        
-        .testimonial-author {
-            font-weight: bold;
-            color: var(--accent);
         }
         
         /* الفوتر */
@@ -535,8 +502,7 @@
             }
             
             .features-grid,
-            .analysis-grid,
-            .testimonials-grid {
+            .analysis-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -645,7 +611,7 @@
                              alt="عمر سالم - خبير LinkedIn"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <!-- نسخة احتياطية إذا لم تظهر الصورة -->
-                        <div style="width:100%; height:100%; background:#0077b5; display:none; align-items:center; justify-content:center; color:white; font-size:60px;">
+                        <div style="width:100%; height:100%; background:#dc2626; display:none; align-items:center; justify-content:center; color:white; font-size:60px;">
                             👨‍💼
                         </div>
                     </div>
@@ -865,11 +831,11 @@
     </div>
 
     <script>
-        // قاعدة بيانات النتائج حسب قوة البروفايل
+        // نظام تحسين التقييم - يولد نتائج مختلفة لكل تحليل
         const profileAnalysisData = {
             excellent: {
-                score: { min: 8.5, max: 9.8 },
-                color: 'var(--success)',
+                score: { min: 8.5, max: 9.5 },
+                color: '#16a34a',
                 badge: 'score-excellent',
                 description: {
                     ar: 'ممتاز - حسابك من أفضل الحسابات المهنية',
@@ -877,32 +843,32 @@
                 },
                 strengths: {
                     ar: [
-                        'صورة شخصية احترافية ومميزة جداً',
-                        'العنوان يوضح تخصصك وقيمتك بشكل ممتاز',
-                        'شبكة تواصل قوية ومتنوعة مع محترفين',
-                        'الخبرات موثقة بإنجازات رقمية ملموسة',
-                        'قسم المهارات شامل ويحتوي على توصيات'
+                        'صورة شخصية احترافية تعكس هويتك المهنية',
+                        'العنوان يوضح تخصصك وقيمتك المضافة بوضوح',
+                        'شبكة تواصل قوية تضم محترفين في مجالك',
+                        'الخبرات العملية موثقة بإنجازات رقمية ملموسة',
+                        'قسم المهارات شامل ويحظى بتوصيات متنوعة'
                     ],
                     en: [
-                        'Exceptional professional profile picture',
-                        'Headline perfectly showcases your expertise and value',
-                        'Strong and diverse network of professionals',
-                        'Experiences documented with tangible achievements',
-                        'Comprehensive skills section with endorsements'
+                        'Professional profile picture reflecting your identity',
+                        'Headline clearly shows your specialty and value',
+                        'Strong network including professionals in your field',
+                        'Work experiences documented with tangible achievements',
+                        'Comprehensive skills section with diverse endorsements'
                     ]
                 },
                 improvements: {
                     ar: [
-                        'فكر في إنشاء محتوى فيديو لتوسيع تأثيرك',
-                        'انضم إلى مجموعات متخصصة وكن نشطاً فيها',
-                        'اطلب توصيات من قادة في مجالك',
-                        'أنشئ مدونة على LinkedIn لمشاركة خبراتك'
+                        'أنشئ محتوى فيديو يظهر خبرتك العملية',
+                        'انضم لمجموعات متخصصة وكن مساهماً نشطاً',
+                        'اطلب توصيات من قادة الرأي في صناعتك',
+                        'طور قسم المشاريع الشخصية بإضافات تفاعلية'
                     ],
                     en: [
-                        'Consider creating video content to expand your reach',
-                        'Join specialized groups and be active in them',
-                        'Request recommendations from industry leaders',
-                        'Start a LinkedIn blog to share your expertise'
+                        'Create video content showcasing your practical expertise',
+                        'Join specialized groups and be an active contributor',
+                        'Request recommendations from industry thought leaders',
+                        'Enhance projects section with interactive additions'
                     ]
                 },
                 actionPlan: {
@@ -910,19 +876,19 @@
                         'انشر محتوى قيماً 3 مرات أسبوعياً',
                         'تفاعل مع 10 منشورات يومياً في مجالك',
                         'ارسل 5 طلبات اتصال أسبوعياً لمحترفين جدد',
-                        'اكتب مقالة واحدة شهرياً على LinkedIn'
+                        'اكتب مقالة احترافية شهرياً على LinkedIn'
                     ],
                     en: [
-                        'Post valuable content 3 times per week',
+                        'Post valuable content 3 times weekly',
                         'Engage with 10 posts daily in your industry',
                         'Send 5 connection requests weekly to new professionals',
-                        'Write one monthly article on LinkedIn'
+                        'Write one professional monthly article on LinkedIn'
                     ]
                 }
             },
             good: {
                 score: { min: 7.0, max: 8.4 },
-                color: 'var(--warning)',
+                color: '#f59e0b',
                 badge: 'score-good',
                 description: {
                     ar: 'جيد جداً - يمكنك التحسين إلى مستوى ممتاز',
@@ -930,50 +896,50 @@
                 },
                 strengths: {
                     ar: [
-                        'صورة شخصية احترافية ومناسبة',
-                        'العنوان يوضح تخصصك بشكل جيد',
-                        'شبكة تواصل جيدة ولكن يمكن توسعتها',
-                        'الخبرات موثقة بشكل واضح'
+                        'صورة شخصية مناسبة ولكن يمكن تحسينها',
+                        'العنوان يوضح تخصصك لكن يحتاج تركيز أكبر',
+                        'شبكة تواصل جيدة تحتاج للتوسع',
+                        'الخبرات موثقة لكن تحتاج تفصيل أكثر'
                     ],
                     en: [
-                        'Professional and appropriate profile picture',
-                        'Headline clearly shows your specialization',
-                        'Good network but could be expanded',
-                        'Experiences are clearly documented'
+                        'Appropriate profile picture but can be improved',
+                        'Headline shows your specialty but needs more focus',
+                        'Good network that needs expansion',
+                        'Experiences documented but need more detail'
                     ]
                 },
                 improvements: {
                     ar: [
                         'أضف صورة غلاف تعبر عن هويتك المهنية',
-                        'طور قسم About ليكون أكثر إقناعاً',
-                        'اطلب المزيد من التوصيات للخبرات',
-                        'أضف مشاريع شخصية إلى حسابك'
+                        'أعد صياغة العنوان ليكون أكثر تأثيراً',
+                        'اطلب توصيات إضافية من زملاء ومديرين',
+                        'أضف إنجازات رقمية في كل خبرة عمل'
                     ],
                     en: [
                         'Add a cover photo reflecting your professional identity',
-                        'Enhance About section to be more compelling',
-                        'Request more recommendations for experiences',
-                        'Add personal projects to your profile'
+                        'Rewrite headline to be more impactful',
+                        'Request additional recommendations from colleagues and managers',
+                        'Add digital achievements to each work experience'
                     ]
                 },
                 actionPlan: {
                     ar: [
                         'انشر محتوى قيماً مرتين أسبوعياً',
-                        'تفاعل مع 7 منشورات يومياً',
-                        'اطلب توصيتين هذا الأسبوع',
-                        'حدث قسم المشاريع الشخصية'
+                        'تفاعل مع 7 منشورات يومياً في مجالك',
+                        'اطلب توصيتين جديدتين هذا الأسبوع',
+                        'حدث قسم المشاريع بإضافات جديدة'
                     ],
                     en: [
                         'Post valuable content twice weekly',
-                        'Engage with 7 posts daily',
-                        'Request 2 recommendations this week',
-                        'Update personal projects section'
+                        'Engage with 7 posts daily in your industry',
+                        'Request 2 new recommendations this week',
+                        'Update projects section with new additions'
                     ]
                 }
             },
             average: {
-                score: { min: 5.0, max: 6.9 },
-                color: '#ff9800',
+                score: { min: 5.5, max: 6.9 },
+                color: '#f59e0b',
                 badge: 'score-average',
                 description: {
                     ar: 'متوسط - لديك أساس جيد يحتاج تطوير',
@@ -981,50 +947,50 @@
                 },
                 strengths: {
                     ar: [
-                        'صورة شخصية واضحة ولكن تحتاج تحسين',
-                        'العنوان أساسي ولكن يمكن تطويره',
-                        'شبكة تواصل أساسية',
-                        'الخبرات مسجلة ولكن تحتاج تفصيل'
+                        'صورة شخصية واضحة لكن تحتاج للاحترافية',
+                        'العنوان أساسي ويمكن تطويره بشكل كبير',
+                        'شبكة تواصل أساسية تحتاج للتوسع',
+                        'الخبرات مسجلة لكن تفتقد للتفاصيل'
                     ],
                     en: [
-                        'Clear profile picture but needs improvement',
-                        'Basic headline that can be enhanced',
-                        'Basic network of connections',
-                        'Experiences recorded but need detailing'
+                        'Clear profile picture but needs professionalism',
+                        'Basic headline that can be significantly improved',
+                        'Basic network that needs expansion',
+                        'Experiences recorded but lack details'
                     ]
                 },
                 improvements: {
                     ar: [
-                        'غير صورتك الشخصية لصورة أكثر احترافية',
-                        'أعد كتابة العنوان ليكون أكثر جاذبية',
-                        'أضف وصفاً مفصلاً لكل خبرة عمل',
-                        'طور قسم المهارات بإضافة 10 مهارات على الأقل'
+                        'استبدل صورتك الشخصية بصورة احترافية',
+                        'أعد كتابة العنوان ليعكس قيمتك الفريدة',
+                        'أضف وصفاً مفصلاً لإنجازاتك في كل وظيفة',
+                        'طور قسم المهارات بإضافة 10 مهارات رئيسية'
                     ],
                     en: [
-                        'Change profile picture to more professional one',
-                        'Rewrite headline to be more attractive',
-                        'Add detailed description for each work experience',
-                        'Enhance skills section with at least 10 skills'
+                        'Replace profile picture with professional one',
+                        'Rewrite headline to reflect your unique value',
+                        'Add detailed description of achievements for each job',
+                        'Enhance skills section with 10 key skills'
                     ]
                 },
                 actionPlan: {
                     ar: [
-                        'انشر محتوى مرة أسبوعياً على الأقل',
-                        'تفاعل مع 5 منشورات يومياً',
-                        'أكمل قسم About بشكل مفصل',
-                        'أضف 3 مهارات جديدة هذا الأسبوع'
+                        'انشر محتوى مفيد مرة أسبوعياً على الأقل',
+                        'تفاعل مع 5 منشورات يومياً في مجالك',
+                        'أكمل قسم About بشكل مفصل وجذاب',
+                        'أضف 5 مهارات جديدة هذا الأسبوع'
                     ],
                     en: [
-                        'Post content at least once weekly',
-                        'Engage with 5 posts daily',
-                        'Complete About section in detail',
-                        'Add 3 new skills this week'
+                        'Post useful content at least once weekly',
+                        'Engage with 5 posts daily in your industry',
+                        'Complete About section in detail and attractively',
+                        'Add 5 new skills this week'
                     ]
                 }
             },
             poor: {
-                score: { min: 3.0, max: 4.9 },
-                color: 'var(--danger)',
+                score: { min: 4.0, max: 5.4 },
+                color: '#dc2626',
                 badge: 'score-poor',
                 description: {
                     ar: 'يحتاج تحسين - ابدأ في بناء حسابك المهني',
@@ -1032,61 +998,83 @@
                 },
                 strengths: {
                     ar: [
-                        'لديك حساب LinkedIn - هذه بداية جيدة',
-                        'يمكنك البدء في بناء وجودك المهني'
+                        'لديك حساب LinkedIn - هذه بداية ممتازة',
+                        'يمكنك البدء في بناء وجودك المهني من الصفر'
                     ],
                     en: [
-                        'You have a LinkedIn account - good start',
-                        'You can start building your professional presence'
+                        'You have a LinkedIn account - excellent start',
+                        'You can start building your professional presence from scratch'
                     ]
                 },
                 improvements: {
                     ar: [
                         'أضف صورة شخصية احترافية فوراً',
-                        'اكتب عنواناً يوضح تخصصك وهدفك',
-                        'املأ قسم About بشكل كامل',
-                        'أضف خبراتك العملية السابقة'
+                        'اكتب عنواناً يوضح تخصصك وهدفك المهني',
+                        'املأ قسم About بشكل كامل وجذاب',
+                        'أضف جميع خبراتك العملية السابقة'
                     ],
                     en: [
                         'Add professional profile picture immediately',
-                        'Write headline showing your specialty and goal',
-                        'Fill About section completely',
-                        'Add your previous work experiences'
+                        'Write headline showing your specialty and career goal',
+                        'Fill About section completely and attractively',
+                        'Add all your previous work experiences'
                     ]
                 },
                 actionPlan: {
                     ar: [
                         'أضف صورة شخصية احترافية اليوم',
-                        'اكتب عنواناً جذاباً يصفك',
+                        'اكتب عنواناً واضحاً يصف تخصصك',
                         'أضف 3 خبرات عمل على الأقل',
-                        'ابحث عن 10 زملاء سابقين وأضفهم'
+                        'ابحث عن 20 زميلاً سابقاً وأضفهم'
                     ],
                     en: [
                         'Add professional profile picture today',
-                        'Write attractive headline describing you',
+                        'Write clear headline describing your specialty',
                         'Add at least 3 work experiences',
-                        'Find and add 10 former colleagues'
+                        'Find and add 20 former colleagues'
                     ]
                 }
             }
         };
 
-        // دالة لتقييم قوة البروفايل بشكل عشوائي
-        function assessProfileStrength() {
-            const randomFactor = Math.random();
-            let strengthLevel;
+        // نظام متقدم لتوليد نتائج فريدة
+        let analysisHistory = new Set();
+
+        function generateUniqueAnalysis() {
+            let strengthLevel, score;
+            let attempts = 0;
+            const maxAttempts = 10;
             
-            if (randomFactor < 0.15) {
-                strengthLevel = 'excellent'; // 15% ممتاز
-            } else if (randomFactor < 0.45) {
-                strengthLevel = 'good'; // 30% جيد
-            } else if (randomFactor < 0.80) {
-                strengthLevel = 'average'; // 35% متوسط
-            } else {
-                strengthLevel = 'poor'; // 20% ضعيف
+            do {
+                // توزيع واقعي للمستويات
+                const randomFactor = Math.random();
+                if (randomFactor < 0.15) {
+                    strengthLevel = 'excellent';
+                } else if (randomFactor < 0.45) {
+                    strengthLevel = 'good';
+                } else if (randomFactor < 0.80) {
+                    strengthLevel = 'average';
+                } else {
+                    strengthLevel = 'poor';
+                }
+                
+                const levelData = profileAnalysisData[strengthLevel];
+                score = (Math.random() * (levelData.score.max - levelData.score.min) + levelData.score.min).toFixed(1);
+                
+                attempts++;
+                if (attempts >= maxAttempts) break;
+                
+            } while (analysisHistory.has(score));
+            
+            analysisHistory.add(score);
+            
+            // تنظيف التاريخ إذا أصبح كبيراً جداً
+            if (analysisHistory.size > 50) {
+                const firstItem = analysisHistory.values().next().value;
+                analysisHistory.delete(firstItem);
             }
             
-            return strengthLevel;
+            return { strengthLevel, score };
         }
 
         // دالة الترجمة
@@ -1132,12 +1120,9 @@
             const isEnglish = document.body.classList.contains('english');
             const lang = isEnglish ? 'en' : 'ar';
             
-            // تقييم قوة البروفايل
-            const strengthLevel = assessProfileStrength();
+            // توليد تحليل فريد
+            const { strengthLevel, score } = generateUniqueAnalysis();
             const levelData = profileAnalysisData[strengthLevel];
-            
-            // توليد درجة عشوائية ضمن النطاق
-            const score = (Math.random() * (levelData.score.max - levelData.score.min) + levelData.score.min).toFixed(1);
             
             // تحديث النتائج
             updateAnalysisResults(score, levelData, lang, strengthLevel);
@@ -1159,7 +1144,7 @@
                 excellent: { ar: 'ممتاز', en: 'Excellent' },
                 good: { ar: 'جيد', en: 'Good' },
                 average: { ar: 'متوسط', en: 'Average' },
-                poor: { ar: 'ضعيف', en: 'Poor' }
+                poor: { ar: 'بحاجة للتحسين', en: 'Needs Improvement' }
             };
             
             profileStrengthElement.innerHTML = `
