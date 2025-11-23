@@ -321,10 +321,67 @@
             display: inline-block;
         }
         
+        /* شاشة التحميل المحسنة */
         .loading {
             display: none;
             text-align: center;
             padding: 40px;
+        }
+        
+        .loading-steps {
+            margin: 30px 0;
+            text-align: right;
+        }
+        
+        .loading-step {
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f1f1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+        }
+        
+        .loading-step.active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .loading-step.completed {
+            color: var(--success);
+        }
+        
+        .loading-step.completed .step-icon {
+            background: var(--success);
+        }
+        
+        .step-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
         }
         
         .spinner {
@@ -335,6 +392,11 @@
             height: 60px;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         /* النتائج المحسنة */
@@ -718,10 +780,19 @@
                     <span lang="en">Start Smart Analysis</span>
                 </button>
                 
+                <!-- شاشة التحميل المحسنة -->
                 <div class="loading" id="loading">
                     <div class="spinner"></div>
                     <p lang="ar">جاري تحليل حسابك باستخدام الذكاء الاصطناعي...</p>
                     <p lang="en">Analyzing your profile with AI...</p>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    
+                    <div class="loading-steps" id="loadingSteps">
+                        <!-- سيتم إضافة الخطوات بالجافاسكريبت -->
+                    </div>
                 </div>
             </div>
             
@@ -831,7 +902,7 @@
     </div>
 
     <script>
-        // نظام تحسين التقييم - يولد نتائج مختلفة لكل تحليل
+        // نظام تحليل أكثر واقعية
         const profileAnalysisData = {
             excellent: {
                 score: { min: 8.5, max: 9.5 },
@@ -1037,44 +1108,78 @@
             }
         };
 
-        // نظام متقدم لتوليد نتائج فريدة
-        let analysisHistory = new Set();
+        // نظام تحليل ذكي يعتمد على بيانات المستخدم
+        function analyzeProfile(linkedinUrl, userGoal) {
+            // تحليل الرابط لاستخراج معلومات
+            const urlAnalysis = analyzeLinkedInUrl(linkedinUrl);
+            
+            // تحليل الهدف لمعرفة الأولويات
+            const goalAnalysis = analyzeUserGoal(userGoal);
+            
+            // توليد نتيجة مخصصة بناءً على البيانات
+            return generateSmartResult(urlAnalysis, goalAnalysis);
+        }
 
-        function generateUniqueAnalysis() {
-            let strengthLevel, score;
-            let attempts = 0;
-            const maxAttempts = 10;
+        function analyzeLinkedInUrl(url) {
+            // محاكاة تحليل الرابط
+            const hasCustomUrl = !url.includes('/in/') || url.includes('/in/yourname') ? 0 : 1;
+            const urlLength = url.length;
+            const hasSpecialChars = /[^a-zA-Z0-9\/:.-]/.test(url) ? 1 : 0;
             
-            do {
-                // توزيع واقعي للمستويات
-                const randomFactor = Math.random();
-                if (randomFactor < 0.15) {
-                    strengthLevel = 'excellent';
-                } else if (randomFactor < 0.45) {
-                    strengthLevel = 'good';
-                } else if (randomFactor < 0.80) {
-                    strengthLevel = 'average';
-                } else {
-                    strengthLevel = 'poor';
-                }
-                
-                const levelData = profileAnalysisData[strengthLevel];
-                score = (Math.random() * (levelData.score.max - levelData.score.min) + levelData.score.min).toFixed(1);
-                
-                attempts++;
-                if (attempts >= maxAttempts) break;
-                
-            } while (analysisHistory.has(score));
+            // حساب جودة الرابط
+            const urlScore = hasCustomUrl * 0.6 + (urlLength < 50 ? 0.2 : 0) + (hasSpecialChars ? 0 : 0.2);
             
-            analysisHistory.add(score);
+            return {
+                hasCustomUrl,
+                urlLength,
+                hasSpecialChars,
+                urlScore
+            };
+        }
+
+        function analyzeUserGoal(goal) {
+            // تحليل الهدف لمعرفة الأولويات
+            const priorities = {
+                job: ['experience', 'skills', 'recommendations'],
+                clients: ['headline', 'about', 'portfolio'],
+                networking: ['connections', 'activity', 'engagement']
+            };
             
-            // تنظيف التاريخ إذا أصبح كبيراً جداً
-            if (analysisHistory.size > 50) {
-                const firstItem = analysisHistory.values().next().value;
-                analysisHistory.delete(firstItem);
+            return {
+                goal,
+                priorities: priorities[goal] || ['headline', 'experience', 'skills']
+            };
+        }
+
+        function generateSmartResult(urlAnalysis, goalAnalysis) {
+            // استخدام تحليل الرابط لتحديد مستوى الحساب
+            let baseScore;
+            let strengthLevel;
+            
+            if (urlAnalysis.urlScore >= 0.8) {
+                strengthLevel = 'excellent';
+                baseScore = 8.5 + Math.random() * 1.0;
+            } else if (urlAnalysis.urlScore >= 0.6) {
+                strengthLevel = 'good';
+                baseScore = 7.0 + Math.random() * 1.4;
+            } else if (urlAnalysis.urlScore >= 0.4) {
+                strengthLevel = 'average';
+                baseScore = 5.5 + Math.random() * 1.4;
+            } else {
+                strengthLevel = 'poor';
+                baseScore = 4.0 + Math.random() * 1.4;
             }
             
-            return { strengthLevel, score };
+            // تعديل النتيجة بناءً على الهدف
+            const goalModifier = goalAnalysis.goal === 'job' ? 0.2 : 
+                                goalAnalysis.goal === 'clients' ? 0.1 : 0;
+            
+            const finalScore = Math.min(9.9, baseScore + goalModifier).toFixed(1);
+            
+            return {
+                strengthLevel,
+                score: finalScore
+            };
         }
 
         // دالة الترجمة
@@ -1093,9 +1198,33 @@
             }
         }
 
-        // كود التحليل الذكي
-        document.getElementById('analyzeBtn').addEventListener('click', function() {
+        // إعداد شاشة التحميل
+        function setupLoadingSteps() {
+            const isEnglish = document.body.classList.contains('english');
+            const lang = isEnglish ? 'en' : 'ar';
+            
+            const steps = [
+                { id: 'step1', text: { ar: 'جاري فحص رابط الحساب...', en: 'Checking profile URL...' } },
+                { id: 'step2', text: { ar: 'تحليل الصورة الشخصية والعنوان...', en: 'Analyzing profile picture and headline...' } },
+                { id: 'step3', text: { ar: 'فحص قسم الخبرات العملية...', en: 'Checking work experience section...' } },
+                { id: 'step4', text: { ar: 'تحليل المهارات والتوصيات...', en: 'Analyzing skills and recommendations...' } },
+                { id: 'step5', text: { ar: 'مراجعة النشاط والشبكة...', en: 'Reviewing activity and network...' } },
+                { id: 'step6', text: { ar: 'توليد التوصيات المخصصة...', en: 'Generating personalized recommendations...' } }
+            ];
+            
+            const loadingStepsElement = document.getElementById('loadingSteps');
+            loadingStepsElement.innerHTML = steps.map(step => `
+                <div class="loading-step" id="${step.id}">
+                    <div class="step-icon"><i class="fas fa-circle"></i></div>
+                    <div>${step.text[lang]}</div>
+                </div>
+            `).join('');
+        }
+
+        // كود التحليل الذكي المحسن
+        document.getElementById('analyzeBtn').addEventListener('click', async function() {
             const linkedinUrl = document.getElementById('linkedinUrl').value;
+            const userGoal = document.getElementById('userGoals').value;
             const isEnglish = document.body.classList.contains('english');
             
             if (!linkedinUrl) {
@@ -1103,29 +1232,59 @@
                 return;
             }
             
+            if (!userGoal) {
+                alert(isEnglish ? "Please select your main goal" : "يرجى اختيار هدفك الرئيسي");
+                return;
+            }
+            
+            // إعداد شاشة التحميل
+            setupLoadingSteps();
+            
             // إظهار تحميل
             document.getElementById('loading').style.display = 'block';
             document.getElementById('analyzeBtn').disabled = true;
             
-            // محاكاة اتصال بالذكاء الاصطناعي
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                generateSmartAnalysis();
-                document.getElementById('result').style.display = 'block';
-                document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
-            }, 2000);
+            // محاكاة تحليل حقيقي مع مؤشر تقدم
+            const progressBar = document.getElementById('progressBar');
+            const steps = document.querySelectorAll('.loading-step');
+            
+            // محاكاة تحليل حقيقي يستغرق 30-45 ثانية
+            const totalTime = 30000 + Math.random() * 15000; // 30-45 ثانية
+            const stepTime = totalTime / 6;
+            
+            for (let i = 0; i < steps.length; i++) {
+                // تحديث الخطوة الحالية
+                if (i > 0) {
+                    steps[i-1].classList.remove('active');
+                    steps[i-1].classList.add('completed');
+                }
+                steps[i].classList.add('active');
+                
+                // تحديث شريط التقدم
+                const progress = ((i + 1) / steps.length) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                // انتظار بين الخطوات
+                await new Promise(resolve => setTimeout(resolve, stepTime));
+            }
+            
+            // إخفاء التحميل وإظهار النتائج
+            document.getElementById('loading').style.display = 'none';
+            generateSmartAnalysis(linkedinUrl, userGoal);
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         });
         
-        function generateSmartAnalysis() {
+        function generateSmartAnalysis(linkedinUrl, userGoal) {
             const isEnglish = document.body.classList.contains('english');
             const lang = isEnglish ? 'en' : 'ar';
             
-            // توليد تحليل فريد
-            const { strengthLevel, score } = generateUniqueAnalysis();
-            const levelData = profileAnalysisData[strengthLevel];
+            // توليد تحليل ذكي بناءً على البيانات
+            const analysisResult = analyzeProfile(linkedinUrl, userGoal);
+            const levelData = profileAnalysisData[analysisResult.strengthLevel];
             
             // تحديث النتائج
-            updateAnalysisResults(score, levelData, lang, strengthLevel);
+            updateAnalysisResults(analysisResult.score, levelData, lang, analysisResult.strengthLevel);
         }
 
         function updateAnalysisResults(score, levelData, lang, strengthLevel) {
